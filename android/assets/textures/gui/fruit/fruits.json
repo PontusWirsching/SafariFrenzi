@@ -1,0 +1,11 @@
+{
+	resource: {
+		name: "fruit:noeffect",
+		path: "textures/gui/fruit/fruit_noeffect.png"
+	},
+	resource: {
+		name: "fruit:effect",
+		path: "textures/gui/fruit/fruit_effect.png"
+	}
+	
+}

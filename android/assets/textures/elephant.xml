@@ -1,0 +1,9 @@
+<SpriteSheet>
+
+    <!-- Elephant Walk Frames -->
+	<Sprite name="elephant:walk_01" x="0" y="0" width="1140" height="780"></Sprite>
+	<Sprite name="elephant:walk_02" x="1140" y="0" width="1140" height="780"></Sprite>
+	<Sprite name="elephant:walk_03" x="2280" y="0" width="1140" height="780"></Sprite>
+	<Sprite name="elephant:walk_04" x="3420" y="0" width="1140" height="780"></Sprite>
+
+</SpriteSheet>

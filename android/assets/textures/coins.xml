@@ -1,0 +1,24 @@
+<SpriteSheet>
+
+	<!-- Gold Coins -->
+	<Sprite name="coin:gold:1" x="0" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:2" x="261" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:3" x="522" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:4" x="783" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:5" x="1044" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:6" x="1305" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:7" x="1566" y="1118" width="261" height="254" />
+	<Sprite name="coin:gold:8" x="1827" y="1118" width="261" height="254" />
+
+	<!-- Gold Coins With Shadow -->
+	<Sprite name="coin:gold:1_shadow" x="0" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:2_shadow" x="413" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:3_shadow" x="826" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:4_shadow" x="1239" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:5_shadow" x="1652" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:6_shadow" x="2065" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:7_shadow" x="2478" y="1372" width="413" height="305"></Sprite>
+	<Sprite name="coin:gold:8_shadow" x="2891" y="1372" width="413" height="305"></Sprite>
+
+
+</SpriteSheet>

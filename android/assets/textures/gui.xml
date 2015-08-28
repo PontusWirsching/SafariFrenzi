@@ -1,0 +1,33 @@
+<SpriteSheet>
+
+	<!-- Chest -->
+	<Sprite name="gui:chest:closed" x="0" y="0" width="332" height="328"></Sprite>
+	<Sprite name="gui:chest:open" x="332" y="0" width="332" height="328"></Sprite>
+
+	<!-- Fruit -->
+	<Sprite name="gui:fruit:noeffect" x="664" y="0" width="124" height="93"></Sprite>
+	<Sprite name="gui:fruit:effect" x="664" y="93" width="124" height="93"></Sprite>
+
+	<!-- Score -->
+	<Sprite name="gui:starbar:empty" x="0" y="328" width="521" height="71"></Sprite>
+	<Sprite name="gui:starbar:first" x="0" y="399" width="521" height="71"></Sprite>
+	<Sprite name="gui:starbar:second" x="0" y="470" width="521" height="71"></Sprite>
+	<Sprite name="gui:starbar:third" x="0" y="541" width="521" height="71"></Sprite>
+	<Sprite name="gui:star:empty" x="664" y="486" width="174" height="175"></Sprite>
+	<Sprite name="gui:star:filled" x="838" y="486" width="174" height="175"></Sprite>
+
+	<!-- Icons -->
+	<Sprite name="gui:icon:fruit_droprate" x="1012" y="0" width="350" height="334"></Sprite>
+	<Sprite name="gui:icon:hyde_thickness" x="709" y="361" width="303" height="309"></Sprite>
+	<Sprite name="gui:icon:fruit_quality" x="1012" y="534" width="201" height="200"></Sprite>
+	<Sprite name="gui:icon:fence_purchase" x="1012" y="334" width="201" height="200"></Sprite>
+	<Sprite name="gui:icon:stamina_increase" x="1362" y="0" width="481" height="300"></Sprite>
+	<Sprite name="gui:icon:money_droprate" x="1213" y="334" width="238" height="219"></Sprite>
+
+	<!-- Elements -->
+	<Sprite name="gui:element:top_bar" x="904" y="734" width="1202" height="77"></Sprite>
+	<Sprite name="gui:element:price_box" x="852" y="105" width="160" height="81"></Sprite>
+
+
+
+</SpriteSheet>

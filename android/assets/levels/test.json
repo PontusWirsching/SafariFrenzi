@@ -1,0 +1,95 @@
+{
+	properties: {
+		name: "Test Level",
+		background: "background:gameplay_sat"
+	},
+	entities: {
+		entity: {
+			id: "spawnedElephant",
+			type: "mobs.Elephant",
+			x: "100",
+			y: "100",
+			width: "125",
+			height: "83",
+			health: "5",
+			dropRate: "5.0"
+		},
+		entity: {
+			id: "spawnedElephant",
+			type: "mobs.Elephant",
+			x: "-200",
+			y: "0",
+			width: "125",
+			height: "83",
+			health: "5",
+			dropRate: "5.0"
+		},
+		entity: {
+			id: "spawnedElephant",
+			type: "mobs.Elephant",
+			x: "200",
+			y: "100",
+			width: "125",
+			height: "83",
+			health: "5",
+			dropRate: "5.0"
+		}
+		
+	},
+	spawners: {
+		spawner: {
+			entity: {
+				type: "mobs.Lion",
+				width: "112",
+				height: "60",
+				health: "3",
+				id: "lionFromLeft"
+			},
+			spawnrate: "0.5",
+			chance: "0.33",
+			bounds: {
+				minX: "-800",
+				minY: "-300",
+				maxX: "-800",
+				maxY: "300"
+			}
+			
+		},
+		spawner: {
+			entity: {
+				type: "mobs.Lion",
+				width: "112",
+				height: "60",
+				health: "3",
+				id: "lionFromRight"
+			},
+			spawnrate: "0.5",
+			chance: "0.33",
+			bounds: {
+				minX: "800",
+				minY: "-300",
+				maxX: "800",
+				maxY: "300"
+			}	
+		},
+		spawner: {
+			entity: {
+				type: "mobs.Elephant",
+				width: "125",
+				height: "83",
+				health: "5",
+				id: "spawnedElephant",
+				dropRate: "5.0"
+			},
+			spawnrate: "0.025",
+			chance: "1.0",
+			bounds: {
+				minX: "-100",
+				minY: "-100",
+				maxX: "200",
+				maxY: "200"
+			}
+			
+		}
+	}
+}
