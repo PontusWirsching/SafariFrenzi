@@ -29,7 +29,7 @@ public class Level {
 	public Level(String path) {
 		this.path = path;
 		entityHandler = new EntityManager();
-
+		
 		
 		load();
 

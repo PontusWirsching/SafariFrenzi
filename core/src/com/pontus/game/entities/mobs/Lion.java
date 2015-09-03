@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.utils.Array;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
+import com.pontus.game.entities.EntityTypes;
 
 public class Lion extends Mob {
 
@@ -18,7 +19,9 @@ public class Lion extends Mob {
 	public Lion(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		ai.setBehavior(Behaviors.HUNT_NEAREST);
-
+		
+		type = EntityTypes.HOSTILE;
+		
 		hitboxScale = 1.3f;
 
 		hostile = true;

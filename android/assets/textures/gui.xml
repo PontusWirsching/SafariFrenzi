@@ -28,6 +28,15 @@
 	<Sprite name="gui:element:top_bar" x="904" y="734" width="1202" height="77"></Sprite>
 	<Sprite name="gui:element:price_box" x="852" y="105" width="160" height="81"></Sprite>
 
-
-
+	<!-- Gems -->
+	<Sprite name="gem:cyan_shadow" x="0" y="612" width="251" height="201"></Sprite>
+	<Sprite name="gem:purple_shadow" x="251" y="612" width="251" height="201"></Sprite>
+	<Sprite name="gem:blue_shadow" x="0" y="813" width="251" height="201"></Sprite>
+	<Sprite name="gem:pink_shadow" x="251" y="813" width="251" height="201"></Sprite>
+	
+	<Sprite name="gem:cyan" x="502" y="670" width="201" height="200"></Sprite>
+	<Sprite name="gem:purple" x="703" y="670" width="201" height="200"></Sprite>
+	<Sprite name="gem:blue" x="502" y="870" width="201" height="200"></Sprite>
+	<Sprite name="gem:pink" x="703" y="870" width="201" height="200"></Sprite>
+		
 </SpriteSheet>

@@ -7,28 +7,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Game;
+import com.pontus.core.Util;
 import com.pontus.core.graphics.gui.GUIHandler;
+import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
-import com.pontus.game.entities.Entity;
-import com.pontus.game.level.LevelHandler;
+import com.pontus.game.entities.collectibles.Collectible;
 
-public class Coin extends Entity {
+public class Coin extends Collectible {
 
-	Animation a;
-	float stateTime = (float) Math.random();
-	TextureRegion currentFrame;
 	public Vector2 origin;
-
-	float time = 0.0f;
-	float decayTime = 4.0f;
-	boolean decaying = false;
-	float secondsToWarn = 2.0f;
-	boolean show = true;
-	float flickerTimer = 0.0f;
-	float flickerRate = 15.0f;
 
 	public Coin(float x, float y, float w, float h, Vector2 v) {
 		super(x, y, w, h);
+
+		setID("coin_gold");
 
 		origin = new Vector2(position);
 
@@ -36,93 +29,108 @@ public class Coin extends Entity {
 
 		velocity = v;
 
-		Array<TextureRegion> frames = new Array<TextureRegion>();
+		addFrame(Resources.get("coin:gold:1_shadow"));
+		addFrame(Resources.get("coin:gold:2_shadow"));
+		addFrame(Resources.get("coin:gold:3_shadow"));
+		addFrame(Resources.get("coin:gold:4_shadow"));
+		addFrame(Resources.get("coin:gold:5_shadow"));
+		addFrame(Resources.get("coin:gold:6_shadow"));
+		addFrame(Resources.get("coin:gold:7_shadow"));
+		addFrame(Resources.get("coin:gold:8_shadow"));
 
-		frames.add(new TextureRegion(Resources.get("coin:gold:1_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:2_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:3_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:4_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:5_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:6_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:7_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:8_shadow")));
+		setupAnimation(0.15f);
 
-		a = new Animation(0.15f, frames);
-		a.setPlayMode(PlayMode.LOOP);
+	}
 
+	@Override
+	public void spawnGhost() {
+		GUIHandler.add(new CoinSprite("coin_sprite", position.x, position.y, size.x, size.y).setStateTime(stateTime));
 	}
 
 	public Coin(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		origin = new Vector2(position);
+		setID("coin_sprite");
 
 		hitboxScale = 1.5f;
 
 		velocity = new Vector2(0, 0);
 
-		Array<TextureRegion> frames = new Array<TextureRegion>();
+		addFrame(Resources.get("coin:gold:1_shadow"));
+		addFrame(Resources.get("coin:gold:2_shadow"));
+		addFrame(Resources.get("coin:gold:3_shadow"));
+		addFrame(Resources.get("coin:gold:4_shadow"));
+		addFrame(Resources.get("coin:gold:5_shadow"));
+		addFrame(Resources.get("coin:gold:6_shadow"));
+		addFrame(Resources.get("coin:gold:7_shadow"));
+		addFrame(Resources.get("coin:gold:8_shadow"));
 
-		frames.add(new TextureRegion(Resources.get("coin:gold:1_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:2_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:3_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:4_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:5_shadow")));
-		frames.add(new TextureRegion(Resources.get("coin:gold:6_shadow")));
-
-		a = new Animation(0.15f, frames);
-		a.setPlayMode(PlayMode.LOOP);
+		setupAnimation(0.15f);
 
 	}
 
-	public void draw(SpriteBatch sb) {
+	class CoinSprite extends Sprite {
 
-		time += Gdx.graphics.getDeltaTime();
-		if (time >= decayTime) {
-			LevelHandler.getSelected().entityHandler.remove(this);
+		Animation a;
+		float stateTime = (float) Math.random();
+		TextureRegion currentFrame;
+
+		public Vector2 velocity = new Vector2();
+
+		public CoinSprite(String id, float x, float y, float width, float height) {
+			super(id, x, y, width, height);
+
+			Array<TextureRegion> frames = new Array<TextureRegion>();
+
+			frames.add(new TextureRegion(Resources.get("coin:gold:1")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:2")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:3")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:4")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:5")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:6")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:7")));
+			frames.add(new TextureRegion(Resources.get("coin:gold:8")));
+
+			velocity.set(0, 0);
+
+			a = new Animation(0.15f, frames);
+			a.setPlayMode(PlayMode.LOOP);
+
 		}
 
-		if (time >= decayTime - secondsToWarn) {
-			decaying = true;
+		/**
+		 * Used to sync animations!
+		 */
+		public CoinSprite setStateTime(float stateTime) {
+			this.stateTime = stateTime;
+			return this;
 		}
 
-		if (health != 1) velocity.y += -Gdx.graphics.getDeltaTime() * 10;
-		if (position.y <= origin.y) {
-			// position.y = origin.y;
-
+		public void remove() {
+			GUIHandler.remove(this);
 		}
 
-		float aa = 0.5f;
+		@Override
+		public void draw(SpriteBatch sb) {
+			stateTime += Gdx.graphics.getDeltaTime();
 
-		if (velocity.x > 0) {
-			velocity.x -= aa * Gdx.graphics.getDeltaTime();
-		}
-		if (velocity.x < 0) {
-			velocity.x += aa * Gdx.graphics.getDeltaTime();
-		}
+			double angle = Util.getAngle(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y);
 
-		stateTime += Gdx.graphics.getDeltaTime();
+			velocity.set((float) -(Math.sin(Math.toRadians(angle)) * 5), (float) -(Math.cos(Math.toRadians(angle)) * 5));
 
-		currentFrame = a.getKeyFrame(stateTime);
-
-		if (decaying) {
-			flickerTimer += Gdx.graphics.getDeltaTime();
-			if (flickerTimer >= 1 / flickerRate) {
-				flickerTimer = 0.0f;
-				show = !show;
+			if (Util.getDistance(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y) < 20) {
+				Game.score++;
+				remove();
 			}
+
+			x += velocity.x;
+			y += velocity.y;
+
+			currentFrame = a.getKeyFrame(stateTime);
+			sb.draw(currentFrame, x - width / 2, y - height / 2, width, height);
+
 		}
 
-		if (show) sb.draw(currentFrame, position.x - size.x / 2, position.y - size.y / 2, size.x, size.y);
-
-	}
-
-	
-
-	@Override
-	public void touched() {
-		health = 0;
-		GUIHandler.add(new com.pontus.core.graphics.gui.sprites.Coin("coin_sprite", position.x, position.y, size.x, size.y).setStateTime(stateTime));
-		super.touched();
 	}
 
 }

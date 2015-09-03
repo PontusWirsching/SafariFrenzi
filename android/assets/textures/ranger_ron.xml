@@ -1,0 +1,13 @@
+<SpriteSheet>
+
+	<!-- Ranger Ron -->
+	<Sprite name="ranger_ron:still" x="0" y="1564" width="967" height="1564"></Sprite>
+	
+
+	<!-- walk frames -->
+	<Sprite name="ranger_ron:walk_01" x="0" y="0" width="967" height="1564"></Sprite>
+	<Sprite name="ranger_ron:walk_02" x="967" y="0" width="967" height="1564"></Sprite>
+	<Sprite name="ranger_ron:walk_03" x="1934" y="0" width="967" height="1564"></Sprite>
+	<Sprite name="ranger_ron:walk_04" x="2901" y="0" width="967" height="1564"></Sprite>
+
+</SpriteSheet>

@@ -19,9 +19,4 @@ public class Mob extends Entity {
 		ai.update(delta);
 	}
 	
-//	@Override
-//	public void draw(SpriteBatch sb) {
-//		
-//	}
-	
 }

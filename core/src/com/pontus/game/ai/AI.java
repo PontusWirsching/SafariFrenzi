@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pontus.core.Util;
 import com.pontus.game.entities.Entity;
+import com.pontus.game.entities.EntityTypes;
 import com.pontus.game.entities.mobs.Mob;
 import com.pontus.game.level.LevelHandler;
 
@@ -86,14 +87,14 @@ public class AI {
 			}
 		}
 	}
-	
+
 	public double updateHostile() {
 		double distanceRecord = 150;
 		hostile = null;
 		for (int i = 0; i < LevelHandler.getSelected().entityHandler.entities.size(); i++) {
 			if (i >= LevelHandler.getSelected().entityHandler.entities.size()) break;
 			Entity e = LevelHandler.getSelected().entityHandler.get(i);
-			if (e.hostile) {
+			if (e.type == EntityTypes.HOSTILE) {
 				if (e != entity) {
 					double distance = Util.getDistance(entity.position.x, entity.position.y, e.position.x, e.position.y);
 					if (distance <= distanceRecord) {
@@ -107,15 +108,15 @@ public class AI {
 	}
 
 	public void update(float delta) {
-		
+
 		if (behavior == Behaviors.PANIC) {
-			
+
 			// 1. get angle to target.
-			
+
 			// 2. rotate that angle 180 degrees.
-			
+
 			// 3. run that way
-			
+
 			updateHostile();
 			if (hostile == null) {
 				setBehavior(Behaviors.ROAM);
@@ -123,7 +124,7 @@ public class AI {
 			}
 			double angleToTarget = Util.getAngle(entity.position.x, entity.position.y, hostile.position.x, hostile.position.y);
 			moveTo(Util.getPosFromAngle((int) entity.position.x, (int) entity.position.y, (int) entity.speed, Math.toRadians(angleToTarget)));
-			
+
 		}
 
 		if (behavior == Behaviors.FETCH) {
@@ -144,11 +145,10 @@ public class AI {
 				target = new Vector2(entity.position);
 				behavior = Behaviors.ROAM;
 			}
-			
+
 			if (updateHostile() < 100) {
 				setBehavior(Behaviors.PANIC);
 			}
-			
 
 		}
 
@@ -165,7 +165,7 @@ public class AI {
 				Entity e = LevelHandler.getSelected().entityHandler.get(i);
 				if (!(e instanceof Mob)) continue;
 
-				if (!e.hostile) {
+				if (e.type == EntityTypes.TARGET) {
 
 					if (e != entity) {
 						double distance = Util.getDistance(entity.position.x, entity.position.y, e.position.x, e.position.y);
@@ -203,7 +203,7 @@ public class AI {
 				}
 			}
 
-			if (drop != null) {
+			if (entity.type == EntityTypes.TARGET) if (drop != null) {
 
 				float ddd = 10000;
 				Entity allowedElephant = null;
@@ -226,7 +226,6 @@ public class AI {
 			// Check if hostile mob is nearby, if so get the fuck out of there..
 			// (switch to PANIC state.)
 
-
 			updateHostile();
 
 			timer += Gdx.graphics.getDeltaTime();
@@ -244,7 +243,7 @@ public class AI {
 			moveTo(target);
 
 			// Hostile mob found, escape!
-			if (hostile != null) {
+			if (entity.type == EntityTypes.TARGET) if (hostile != null) {
 				behavior = Behaviors.PANIC; // Set behavior to panic, hostile
 			}
 

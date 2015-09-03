@@ -29,6 +29,7 @@ public class SafariFrenzi implements ApplicationListener {
 		Resources.loadSheet("textures/elephant");
 		Resources.loadSheet("textures/lion");
 		Resources.loadSheet("textures/gui");
+		Resources.loadSheet("textures/ranger_ron");
 
 
 		

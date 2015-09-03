@@ -11,10 +11,9 @@ package com.pontus.game.ai;
 public enum Behaviors {
 
 	/**
-	 * The ROAM behavior makes the mob simple roam around on the screen. <br>
+	 * The ROAM behavior makes the mob simply roam around on the screen. <br>
 	 * The mob will not move outside the screen area and / or not move into
-	 * other <br>
-	 * mobs. <br>
+	 * other mobs. <br>
 	 * The mob will also try to keep somewhere in the center. <br>
 	 * The mob can switch to PANIC behavior if needed, this occurs if a <br>
 	 * hostile mob is detected nearby. <br>

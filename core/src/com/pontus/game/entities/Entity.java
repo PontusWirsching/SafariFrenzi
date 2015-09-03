@@ -65,6 +65,11 @@ public class Entity implements Renderable {
 	public String entityID = "UNDEFINED";
 
 	/**
+	 * 
+	 */
+	public EntityTypes type = EntityTypes.TARGET;
+	
+	/**
 	 * How many attacks per second.
 	 */
 	public float attackRate = 1.0f;
@@ -99,6 +104,16 @@ public class Entity implements Renderable {
 	 */
 	public boolean flip = false;
 
+	/**
+	 * This will reverse the flip variable.
+	 */
+	public boolean flipOffset = false;
+
+	/**
+	 * The Mob can't move above this y position.
+	 */
+	public int topBounds = 100;
+	
 	public Entity(float x, float y, float w, float h) {
 		position = new Vector2(x, y);
 		size = new Vector2(w, h);
@@ -153,15 +168,15 @@ public class Entity implements Renderable {
 		}
 
 		if (velocity.x < 0) {
-			flip = true;
+			flip = !flipOffset;
 		}
 		if (velocity.x > 0) {
-			flip = false;
+			flip = flipOffset;
 		}
 		
 		if (this instanceof Mob) {
-			if (position.y >= 100) {
-				position.y = 100;
+			if (position.y >= topBounds) {
+				position.y = topBounds;
 			}
 		}
 
