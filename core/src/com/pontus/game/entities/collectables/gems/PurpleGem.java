@@ -14,7 +14,7 @@ public class PurpleGem extends Collectible {
 	public PurpleGem(float x, float y, float w, float h) {
 		super(x, y, w, h);
 
-		setID("gem_purple");
+		setID("VALUEABLE");
 
 		hitboxScale = 1.5f;
 

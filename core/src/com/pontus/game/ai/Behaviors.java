@@ -76,6 +76,12 @@ public enum Behaviors {
 	 * @since 2015-07-28
 	 * @see com.pontus.game.ai.Behaviors.ROAM
 	 */
-	FETCH
+	FETCH,
+	
+	/**
+	 * The DEFEND behavior will make the AI attack hostile mobs, <br>
+	 * this is used in the Rhino etc. <br>
+	 */
+	DEFEND
 
 }

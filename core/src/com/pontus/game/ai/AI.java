@@ -9,7 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.pontus.core.Util;
 import com.pontus.game.entities.Entity;
 import com.pontus.game.entities.EntityTypes;
+import com.pontus.game.entities.mobs.Elephant;
 import com.pontus.game.entities.mobs.Mob;
+import com.pontus.game.entities.mobs.friends.Monkey;
+import com.pontus.game.entities.mobs.friends.Rhino;
 import com.pontus.game.level.LevelHandler;
 
 public class AI {
@@ -88,6 +91,25 @@ public class AI {
 		}
 	}
 
+	private void getNearestValueable() {
+		double nearest = 3000;
+		target = null;
+		entityTarget = null;
+		for (int i = 0; i < LevelHandler.getSelected().entityHandler.entities.size(); i++) {
+			if (i >= LevelHandler.getSelected().entityHandler.entities.size()) break;
+			Entity e = LevelHandler.getSelected().entityHandler.get(i);
+			if (e == null) continue;
+			if (e.entityID.equals("VALUEABLE")) {
+				double d = Util.getDistance(entity.position.x, entity.position.y, e.position.x, e.position.y);
+				if (d <= nearest) {
+					nearest = d;
+					target = new Vector2(e.position);
+					entityTarget = e;
+				}
+			}
+		}
+	}
+
 	public double updateHostile() {
 		double distanceRecord = 150;
 		hostile = null;
@@ -108,15 +130,42 @@ public class AI {
 	}
 
 	public void update(float delta) {
+		if (behavior == Behaviors.DEFEND) {
 
+			// Get nearest hostile mob.
+			double distanceRecord = 1000;
+
+			// Loop trough all entities and get the closest one, set is as this
+			// entities target.
+			for (int i = 0; i < LevelHandler.getSelected().entityHandler.entities.size(); i++) {
+				if (i >= LevelHandler.getSelected().entityHandler.entities.size()) break;
+				Entity e = LevelHandler.getSelected().entityHandler.get(i);
+				if (!(e instanceof Mob)) continue;
+
+				if (e.type == EntityTypes.HOSTILE) {
+					if (e != entity) {
+						double distance = Util.getDistance(entity.position.x, entity.position.y, e.position.x, e.position.y);
+						if (distance <= distanceRecord) {
+							distanceRecord = distance;
+							entity.target = e;
+						}
+					}
+				} else continue;
+			}
+
+			if (entity.target != null) {
+				double distance = Util.getDistance(entity.position.x, entity.position.y, entity.target.position.x, entity.target.position.y);
+				if (distance >= 100) {
+					moveTo(entity.target.position);
+				} else {
+					entity.velocity.set(0, 0);
+					entity.attack();
+				}
+			} else {
+				setBehavior(Behaviors.ROAM);
+			}
+		}
 		if (behavior == Behaviors.PANIC) {
-
-			// 1. get angle to target.
-
-			// 2. rotate that angle 180 degrees.
-
-			// 3. run that way
-
 			updateHostile();
 			if (hostile == null) {
 				setBehavior(Behaviors.ROAM);
@@ -124,30 +173,43 @@ public class AI {
 			}
 			double angleToTarget = Util.getAngle(entity.position.x, entity.position.y, hostile.position.x, hostile.position.y);
 			moveTo(Util.getPosFromAngle((int) entity.position.x, (int) entity.position.y, (int) entity.speed, Math.toRadians(angleToTarget)));
-
 		}
-
 		if (behavior == Behaviors.FETCH) {
-
-			// 1. look for any fruit drop.
-
-			// 2. Move to it and pick it up!
-
-			getNearestFruit();
-
-			if (target != null) {
-				if (getHunters(entityTarget).size() > 0) {
-					getNearestFruit();
+			if (entity instanceof Elephant) {
+				getNearestFruit();
+				if (target != null) {
+					if (getHunters(entityTarget).size() > 0) {
+						getNearestFruit();
+					}
+					entity.target = entityTarget;
+					moveTo(target);
+				} else {
+					target = new Vector2(entity.position);
+					behavior = Behaviors.ROAM;
 				}
-				entity.target = entityTarget;
-				moveTo(target);
-			} else {
-				target = new Vector2(entity.position);
-				behavior = Behaviors.ROAM;
+
+				if (updateHostile() < 100) {
+					setBehavior(Behaviors.PANIC);
+				}
 			}
 
-			if (updateHostile() < 100) {
-				setBehavior(Behaviors.PANIC);
+			if (entity instanceof Monkey) {
+				getNearestValueable();
+
+				if (target != null) {
+
+					moveTo(target);
+
+					if (getDistance(entity, entityTarget) <= 50) {
+						entityTarget.touched();
+					}
+
+				} else {
+					// entity.velocity.set(0, 0);
+					// target = new Vector2(entity.position);
+					setBehavior(Behaviors.ROAM);
+				}
+
 			}
 
 		}
@@ -219,8 +281,8 @@ public class AI {
 				if (entity == allowedElephant) if (getHunters(drop).size() == 0) {
 					entity.target = drop;
 					behavior = Behaviors.FETCH;
-
 				}
+
 			}
 
 			// Check if hostile mob is nearby, if so get the fuck out of there..
@@ -240,13 +302,47 @@ public class AI {
 				timer = 0.0f;
 			}
 
-			moveTo(target);
+			if (target != null) moveTo(target);
 
 			// Hostile mob found, escape!
 			if (entity.type == EntityTypes.TARGET) if (hostile != null) {
 				behavior = Behaviors.PANIC; // Set behavior to panic, hostile
 			}
 
+			if (entity instanceof Monkey) {
+				getNearestValueable();
+
+				if (target != null) {
+					setBehavior(Behaviors.FETCH);
+				}
+			}
+
+			if (entity instanceof Rhino) {
+				// Get nearest hostile mob.
+				double distanceRecord = 1000;
+
+				// Loop trough all entities and get the closest one, set is as
+				// this
+				// entities target.
+				for (int i = 0; i < LevelHandler.getSelected().entityHandler.entities.size(); i++) {
+					if (i >= LevelHandler.getSelected().entityHandler.entities.size()) break;
+					Entity e = LevelHandler.getSelected().entityHandler.get(i);
+					if (!(e instanceof Mob)) continue;
+
+					if (e.type == EntityTypes.HOSTILE) {
+						if (e != entity) {
+							double distance = Util.getDistance(entity.position.x, entity.position.y, e.position.x, e.position.y);
+							if (distance <= distanceRecord) {
+								distanceRecord = distance;
+								entity.target = e;
+							}
+						}
+					} else continue;
+				}
+				if (entity.target != null) {
+					setBehavior(Behaviors.DEFEND);
+				}
+			}
 		}
 	}
 

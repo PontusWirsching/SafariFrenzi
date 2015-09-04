@@ -2,8 +2,9 @@ package com.pontus.game.entities.mobs.friends;
 
 public enum FriendType {
 	
-	RANGER_RON;
+	RANGER_RON,
+	MONKEY,
+	RHINO
 	
-	public int i = 0;
 	
 }

@@ -1,0 +1,7 @@
+<SpriteSheet>
+
+    <!-- Rhino walk frames -->
+	<Sprite name="rhino:walk_01" x="0" y="0" width="924" height="518"></Sprite>
+	<Sprite name="rhino:walk_02" x="924" y="0" width="924" height="518"></Sprite>
+
+</SpriteSheet>

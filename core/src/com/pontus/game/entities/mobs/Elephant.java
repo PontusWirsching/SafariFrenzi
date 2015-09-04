@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
@@ -22,7 +23,7 @@ public class Elephant extends Mob {
 	public Elephant(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		ai.setBehavior(Behaviors.ROAM);
-
+		ai.roamBounds = new Rectangle(-300, -250, 600, 350);
 		
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		

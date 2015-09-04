@@ -16,6 +16,11 @@ import com.pontus.game.entities.Spawner;
 import com.pontus.game.entities.SpawnerManager;
 import com.pontus.game.entities.collectables.coins.Coin;
 import com.pontus.game.entities.mobs.Elephant;
+import com.pontus.game.entities.mobs.friends.FriendManager;
+import com.pontus.game.entities.mobs.friends.FriendType;
+import com.pontus.game.entities.mobs.friends.Monkey;
+import com.pontus.game.entities.mobs.friends.RangerRon;
+import com.pontus.game.entities.mobs.friends.Rhino;
 
 public class Level {
 
@@ -29,8 +34,25 @@ public class Level {
 	public Level(String path) {
 		this.path = path;
 		entityHandler = new EntityManager();
-		
-		
+
+		for (FriendType t : FriendManager.getData()) {
+			System.out.println(t);
+			if (t == null) continue;
+			switch (t) {
+				case MONKEY:
+					entityHandler.add(new Monkey(0, 0, 539 / 10, 839 / 10));
+					break;
+				case RANGER_RON:
+					entityHandler.add(new RangerRon(0, 0, 967 / 16, 1564 / 16));
+					break;
+				case RHINO:
+					entityHandler.add(new Rhino(0, 0, 924 / 8, 518 / 8));
+					break;
+				default:
+					break;
+			}
+		}
+
 		load();
 
 	}
@@ -62,8 +84,7 @@ public class Level {
 			System.err.println("[ERROR] Level: " + path + ", does not contain a spawners section!!");
 			fail = true;
 		}
-		if (fail)
-			return;
+		if (fail) return;
 
 		name = getValue("name", properties);
 		background = Resources.get(getValue("background", properties));
@@ -89,7 +110,6 @@ public class Level {
 			float maxX = Float.parseFloat(getValue("maxX", bounds));
 			float maxY = Float.parseFloat(getValue("maxY", bounds));
 
-
 			s.setBounds(minX, minY, maxX, maxY);
 			s.entity = entity;
 			SpawnerManager.add(s);
@@ -109,28 +129,28 @@ public class Level {
 				int w = Integer.parseInt(getValue("width", entity));
 				int h = Integer.parseInt(getValue("height", entity));
 				Entity o = (Entity) t.getConstructor(float.class, float.class, float.class, float.class).newInstance(x, y, w, h);
-				
+
 				try {
 					o.entityID = getValue("id", entity);
-				} catch(Exception e) {
-					
+				} catch (Exception e) {
+
 				}
-				
+
 				try {
 					if (o instanceof Elephant) {
 						Elephant ee = (Elephant) o;
 						ee.dropRate = Float.parseFloat(getValue("dropRate", entity));
 					}
-				} catch(Exception e) {
-					
+				} catch (Exception e) {
+
 				}
-				
+
 				try {
 					o.setHealth(Integer.parseInt(getValue("health", entity)));
-				} catch(Exception e) {
-					
+				} catch (Exception e) {
+
 				}
-				
+
 				try {
 					o.script = new Script("scripts/" + getValue("script", entity));
 				} catch (Exception e) {
@@ -181,22 +201,23 @@ public class Level {
 		}
 
 	}
-	
+
 	/**
 	 * Spawns a coin from a certain position.
 	 * 
-	 * @param position - place for new coin to spawn from.
+	 * @param position
+	 *            - place for new coin to spawn from.
 	 */
 	public void spawnCoin(Vector2 position) {
-		
+
 		float r = 20 * (float) Math.random();
 		float w = 40 + r;
 		float h = 40 + r;
-		
+
 		Vector2 velocity = new Vector2((float) (Math.random() - 0.5) * 2, 5 + (2 * (float) Math.random()));
 		velocity.set(0, 0);
 		entityHandler.add(new Coin(position.x, position.y - 50, w, h, velocity).setHealth(1));
-		
+
 	}
 
 	/**
@@ -215,7 +236,7 @@ public class Level {
 	public void update(float delta) {
 		entityHandler.update(delta);
 	}
-	
+
 	public void render(SpriteBatch sb) {
 
 		if (background != null) {
@@ -225,18 +246,20 @@ public class Level {
 			System.err.println("Background is null!");
 		}
 		entityHandler.render(sb);
-		
-//		ShapeRenderer sr = ScreenManager.getSelected().sr;
-//
-//		sr.begin(ShapeType.Line);
-//		{
-//			sr.setColor(Color.RED);
-//			for (Entity e : entityHandler.entities) {
-//				sr.rect(e.position.x - (e.size.x * e.hitboxScale) / 2, e.position.y - (e.size.y * e.hitboxScale) / 2, e.size.x * e.hitboxScale, e.size.y * e.hitboxScale);
-//			}
-//		}
-//		sr.end();
-		
+
+		// ShapeRenderer sr = ScreenManager.getSelected().sr;
+		//
+		// sr.begin(ShapeType.Line);
+		// {
+		// sr.setColor(Color.RED);
+		// for (Entity e : entityHandler.entities) {
+		// sr.rect(e.position.x - (e.size.x * e.hitboxScale) / 2, e.position.y -
+		// (e.size.y * e.hitboxScale) / 2, e.size.x * e.hitboxScale, e.size.y *
+		// e.hitboxScale);
+		// }
+		// }
+		// sr.end();
+
 	}
 
 }

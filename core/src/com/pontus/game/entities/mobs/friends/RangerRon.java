@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.graphics.screen.ScreenManager;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
 import com.pontus.game.entities.collectables.gems.PurpleGem;
@@ -22,7 +23,7 @@ public class RangerRon extends Friend {
 	public RangerRon(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		ai.setBehavior(Behaviors.ROAM);
-		ai.roamBounds = new Rectangle(-150, 125, 300, 50);
+		
 		
 		topBounds = 175;
 		
@@ -48,6 +49,8 @@ public class RangerRon extends Friend {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		float width = ScreenManager.getSelected().camera.viewportWidth;
+		ai.roamBounds = new Rectangle(-(width * 0.8f) / 2, 100, (width * 0.6f), 50);
 		
 		timer += Gdx.graphics.getDeltaTime();
 		if (timer >= 1 / dropRate) {

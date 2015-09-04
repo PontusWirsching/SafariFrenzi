@@ -21,7 +21,7 @@ public class Coin extends Collectible {
 	public Coin(float x, float y, float w, float h, Vector2 v) {
 		super(x, y, w, h);
 
-		setID("coin_gold");
+		setID("VALUEABLE");
 
 		origin = new Vector2(position);
 

@@ -21,7 +21,8 @@ import com.pontus.core.graphics.screen.GameScreen;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.entities.Entity;
 import com.pontus.game.entities.SpawnerManager;
-import com.pontus.game.entities.mobs.friends.RangerRon;
+import com.pontus.game.entities.mobs.friends.FriendManager;
+import com.pontus.game.entities.mobs.friends.FriendType;
 import com.pontus.game.level.Level;
 import com.pontus.game.level.LevelHandler;
 
@@ -43,14 +44,17 @@ public class Game extends GameScreen {
 
 		font = new BitmapFont();
 
+		FriendManager.add(FriendType.RANGER_RON);
+		FriendManager.add(FriendType.MONKEY);
+		FriendManager.add(FriendType.RHINO);
+
 		topBarPosition = camera.viewportHeight / 2 - Resources.get("gui:element:top_bar").getRegionHeight() / 1.6f;
 
 		LevelHandler.add(new Level("levels/test.json"));
 		
-		
-		// TODO - Adding ranger ron here:
-		LevelHandler.getSelected().entityHandler.add(new RangerRon(0, 0, 967 / 16, 1564 / 16));
 
+		
+		
 		GUIHandler.add(new Topbar("top_bar", 0, topBarPosition, 50, Resources.get("gui:element:top_bar").getRegionHeight() / 1.2f).setTexture(Resources.get("gui:element:top_bar")));
 
 		GUIHandler.add(new Button("chest", camera.viewportWidth / 1.8f, topBarPosition, 100, 100, new ButtonInterface() {
