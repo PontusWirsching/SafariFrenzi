@@ -14,6 +14,15 @@ public class LevelHandler {
 		levels.add(level);
 	}
 	
+	public static void setSelected(String name) {
+		for (Level l : levels) {
+			if (l.name.equals(name)) {
+				selected = levels.indexOf(l);
+				l.isPlaying();
+			}
+		}
+	}
+	
 	public static Level get(int index) {
 		return levels.get(index);
 	}

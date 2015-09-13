@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.pontus.core.Game;
 import com.pontus.core.Util;
+import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.GUIHandler;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.entities.collectibles.Collectible;
+import com.pontus.game.level.LevelHandler;
 
 public class Coin extends Collectible {
 
@@ -44,13 +45,13 @@ public class Coin extends Collectible {
 
 	@Override
 	public void spawnGhost() {
-		GUIHandler.add(new CoinSprite("coin_sprite", position.x, position.y, size.x, size.y).setStateTime(stateTime));
+		GUIHandler.add(new CoinSprite("VALUEABLE", position.x, position.y, size.x, size.y).setStateTime(stateTime));
 	}
 
 	public Coin(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		origin = new Vector2(position);
-		setID("coin_sprite");
+		setID("VALUEABLE");
 
 		hitboxScale = 1.5f;
 
@@ -119,7 +120,7 @@ public class Coin extends Collectible {
 			velocity.set((float) -(Math.sin(Math.toRadians(angle)) * 5), (float) -(Math.cos(Math.toRadians(angle)) * 5));
 
 			if (Util.getDistance(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y) < 20) {
-				Game.score++;
+				LevelHandler.getSelected().score += Values.COIN_BRONZE;
 				remove();
 			}
 

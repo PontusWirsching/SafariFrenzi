@@ -2,12 +2,13 @@ package com.pontus.game.entities.collectables.gems;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.pontus.core.Game;
 import com.pontus.core.Util;
+import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.GUIHandler;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.entities.collectibles.Collectible;
+import com.pontus.game.level.LevelHandler;
 
 public class PurpleGem extends Collectible {
 
@@ -24,7 +25,7 @@ public class PurpleGem extends Collectible {
 
 	@Override
 	public void spawnGhost() {
-		GUIHandler.add(new GemSprite("gem:purple_sprite", position.x, position.y, size.x, size.y));
+		GUIHandler.add(new GemSprite("VALUEABLE", position.x, position.y, size.x, size.y));
 	}
 	
 	class GemSprite extends Sprite {
@@ -57,9 +58,7 @@ public class PurpleGem extends Collectible {
 			velocity.set((float) -(Math.sin(Math.toRadians(angle)) * 5), (float) -(Math.cos(Math.toRadians(angle)) * 5));
 
 			if (Util.getDistance(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y) < 20) {
-				
-				// Increase coins
-				Game.score += 10;
+				LevelHandler.getSelected().score += Values.GEM_PURPLE;
 				remove();
 			}
 

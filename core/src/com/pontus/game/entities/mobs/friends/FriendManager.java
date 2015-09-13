@@ -30,7 +30,6 @@ public class FriendManager {
 	 */
 	public static void add(FriendType type) {
 		for (int i = 0; i < selected.length; i++) {
-			System.out.println(i);
 			if (selected[i] == null) {
 				selected[i] = type;
 				return;

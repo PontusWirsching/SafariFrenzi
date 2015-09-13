@@ -28,8 +28,6 @@ import com.pontus.game.level.LevelHandler;
 
 public class Game extends GameScreen {
 
-	public static int score = 0;
-
 	public static boolean DEBUG_ENTITY = false;
 
 	public static BitmapFont font;
@@ -83,7 +81,7 @@ public class Game extends GameScreen {
 				sb.draw(priceBox, sprite.x - 75 / 2, sprite.y - sprite.height / 1.8f, 75, 30);
 				font.setScale(1.2f);
 				font.setColor(Color.BLACK);
-				String s = String.valueOf(score);
+				String s = String.valueOf(0);
 
 				font.draw(sb, s, sprite.x - font.getBounds(s).width / 2, sprite.y - sprite.height / 3f);
 			}
@@ -135,8 +133,7 @@ public class Game extends GameScreen {
 		GUIHandler.get("chest").texture = Resources.get("gui:chest:closed");
 		for (int i = 0; i < GUIHandler.elements.size(); i++) {
 			GUIElement e = GUIHandler.get(i);
-
-			if (e.id == "coin_sprite") {
+			if (e.id == "VALUEABLE") {
 				double distance = Util.getDistance(e.x, e.y, GUIHandler.get("chest").x, GUIHandler.get("chest").y);
 				if (distance < 100) {
 					GUIHandler.get("chest").texture = Resources.get("gui:chest:open");
@@ -187,8 +184,12 @@ public class Game extends GameScreen {
 			Input.update();
 
 			GUIHandler.render(sb);
+			
+			
 		}
 		sb.end();
+		
+		
 		if (DEBUG_ENTITY) {
 			sr.begin(ShapeType.Line);
 			{

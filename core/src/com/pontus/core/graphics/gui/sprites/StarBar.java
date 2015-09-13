@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
+import com.pontus.game.level.Level;
+import com.pontus.game.level.LevelHandler;
 
 public class StarBar extends Sprite {
 
@@ -32,19 +34,32 @@ public class StarBar extends Sprite {
 	@Override
 	public void draw(SpriteBatch sb) {
 
+		Level currentLevel = LevelHandler.getSelected();
+
+		if (currentLevel.score > currentLevel.starThree) {
+			state = 3;
+		} else if (currentLevel.score > currentLevel.starTwo) {
+			state = 2;
+		} else if (currentLevel.score > currentLevel.starOne) {
+			state = 1;
+		} else {
+			state = 0;
+
+		}
+
 		switch (state) {
-		case 0:
-			sb.draw(empty, x - width / 2, y - height / 2, width, height);
-			break;
-		case 1:
-			sb.draw(one, x - width / 2, y - height / 2, width, height);
-			break;
-		case 2:
-			sb.draw(two, x - width / 2, y - height / 2, width, height);
-			break;
-		case 3:
-			sb.draw(three, x - width / 2, y - height / 2, width, height);
-			break;
+			case 0:
+				sb.draw(empty, x - width / 2, y - height / 2, width, height);
+				break;
+			case 1:
+				sb.draw(one, x - width / 2, y - height / 2, width, height);
+				break;
+			case 2:
+				sb.draw(two, x - width / 2, y - height / 2, width, height);
+				break;
+			case 3:
+				sb.draw(three, x - width / 2, y - height / 2, width, height);
+				break;
 
 		}
 

@@ -1,7 +1,14 @@
 {
 	properties: {
 		name: "Test Level",
-		background: "background:gameplay_sat"
+		background: "background:gameplay_sat",
+		score: {
+			start: "3500",
+			decrease: "10",
+			starOne: "1000",
+			starTwo: "2000",
+			starThree: "3000"
+		}
 	},
 	entities: {
 		entity: {
@@ -45,8 +52,9 @@
 				health: "3",
 				id: "lionFromLeft"
 			},
-			spawnrate: "0.5",
+			spawnrate: "2",
 			chance: "0.33",
+			spawnIncrease: "0.001",
 			bounds: {
 				minX: "-800",
 				minY: "-300",
@@ -63,8 +71,9 @@
 				health: "3",
 				id: "lionFromRight"
 			},
-			spawnrate: "0.5",
+			spawnrate: "2",
 			chance: "0.33",
+			spawnIncrease: "0.001",
 			bounds: {
 				minX: "800",
 				minY: "-300",
@@ -83,6 +92,7 @@
 			},
 			spawnrate: "0.025",
 			chance: "1.0",
+			spawnIncrease: "0",
 			bounds: {
 				minX: "-100",
 				minY: "-100",

@@ -15,6 +15,8 @@ public class Spawner {
 
 	public float spawnRate = 0.0f; // Number of spawns every second.
 
+	public float increase = 0.0f;
+	
 	public float timer = 0.0f;
 
 	public float chance = 1.0f;
@@ -27,9 +29,10 @@ public class Spawner {
 
 	public Random r = new Random();
 
-	public Spawner(float spawnRate, float chance) {
+	public Spawner(float spawnRate, float chance, float increase) {
 		this.spawnRate = spawnRate;
 		this.chance = chance;
+		this.increase = increase;
 	}
 
 	public void setBounds(float minX, float minY, float maxX, float maxY) {
@@ -52,6 +55,8 @@ public class Spawner {
 	
 	public void update() {
 
+		spawnRate += increase * Gdx.graphics.getDeltaTime();
+		
 		timer += Gdx.graphics.getDeltaTime();
 		if (timer >= 1 / spawnRate) {
 

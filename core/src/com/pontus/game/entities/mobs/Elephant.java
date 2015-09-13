@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Values;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
 import com.pontus.game.entities.Entity;
@@ -36,7 +37,9 @@ public class Elephant extends Mob {
 
 		a = new Animation(0.15f, frames);
 		a.setPlayMode(PlayMode.LOOP);
-
+		
+		growRate *= (float) (Math.random() + 1.0) - 0.5f;
+		
 	}
 
 	/**
@@ -48,12 +51,17 @@ public class Elephant extends Mob {
 	 * The hungerRate is how much more hungry the elephant gets every second.
 	 */
 	public float hungerRate = 0.01f; // TODO - Change back to 0.05
+	
+	/**
+	 * The elephants max hunger rate, this is implemented so that the elephant gets hungrier as it grows.
+	 */
+	public float maxHungerRate = 0.03f;
 
 	/**
 	 * How many coins should the elephant drop every second.
 	 */
 	public float dropRate = 1.0f;
-
+	
 	/**
 	 * Private drop rate timer.
 	 */
@@ -65,14 +73,19 @@ public class Elephant extends Mob {
 	public float growthTimer = 0.0f;
 
 	/**
-	 * How often should the elephant check variables and possible grow?
+	 * How often should the elephant check variables and possibly grow?
 	 */
-	public float growRate = 0.01f;
+	public float growRate = 5f;
 
 	/**
 	 * Growth of the elephant, value between 0 -> 1, 1 is full size.
 	 */
 	public float growth = 0.0f;
+	
+	/**
+	 * Hunger must be greater than this number or the elephant wont grow.
+	 */
+	public float growThreashold = 0.20f;
 
 	/**
 	 * The elephant will grow and display a particle effect of some sort.
@@ -84,11 +97,18 @@ public class Elephant extends Mob {
 		} else {
 			setHealth((int) (maxHealth * (growth + 1)));
 			size.set(size.x + (extraSize * growth), size.y + (extraSize * growth));
+			hungerRate = maxHungerRate * growth;
 		}
 	}
 
-	public float extraSize = 100;
+	public float extraSize = 30;
 
+	@Override
+	public void died() {
+		super.died();
+		LevelHandler.getSelected().score -= Values.ELEPHANT_DEATH;
+	}
+	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
@@ -112,19 +132,17 @@ public class Elephant extends Mob {
 			}
 		}
 
-		// growthTimer += Gdx.graphics.getDeltaTime();
+		 growthTimer += (1 / growRate) * Gdx.graphics.getDeltaTime();
 
 		// System.out.println(health + ", " + maxHealth + ", " + hunger + ", " +
 		// growth);
 
 		if (growthTimer >= 1.0f) {
-
 			if (health / maxHealth == 1) {
-				if (hunger <= 0.20f) {
+				if (hunger <= growThreashold) {
 					grow();
 				}
 			}
-
 			growthTimer = 0.0f;
 		}
 
@@ -152,6 +170,12 @@ public class Elephant extends Mob {
 			sb.setColor(new Color(0.5f, 1.0f, 0.4f, hunger));
 			drawFrame(sb, currentFrame);
 			sb.setColor(Color.WHITE);
+			
+//			Game.font.draw(sb, "HP: " + health, position.x, position.y);
+//			Game.font.draw(sb, "MH: " + maxHealth, position.x, position.y - 15);
+//			Game.font.draw(sb, "HU: " + hunger, position.x, position.y - 30);
+
+			
 
 //		}
 	}

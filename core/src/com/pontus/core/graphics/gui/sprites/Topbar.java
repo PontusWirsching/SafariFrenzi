@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pontus.core.Game;
 import com.pontus.core.graphics.gui.Sprite;
+import com.pontus.game.level.LevelHandler;
 
 public class Topbar extends Sprite {
 
@@ -16,7 +17,7 @@ public class Topbar extends Sprite {
 		super.draw(sb);
 
 		
-		String s = String.valueOf(Game.score);
+		String s = String.valueOf((int) LevelHandler.getSelected().score);
 		
 		Game.font.setScale(2);
 		Game.font.setColor(Color.WHITE);

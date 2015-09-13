@@ -26,6 +26,15 @@ public class Level {
 
 	public String path = "";
 	public String name = "NOT_SET";
+	
+	/**
+	 * The score of this level.
+	 */
+	public float score = 0;
+	
+	public float decrease = 0;
+	
+	public float starOne = 0, starTwo = 0, starThree = 0;
 
 	public TextureRegion background;
 
@@ -36,7 +45,6 @@ public class Level {
 		entityHandler = new EntityManager();
 
 		for (FriendType t : FriendManager.getData()) {
-			System.out.println(t);
 			if (t == null) continue;
 			switch (t) {
 				case MONKEY:
@@ -57,6 +65,10 @@ public class Level {
 
 	}
 
+	public void isPlaying() {
+		
+	}
+	
 	private void load() {
 
 		JsonReader r = new JsonReader();
@@ -89,6 +101,14 @@ public class Level {
 		name = getValue("name", properties);
 		background = Resources.get(getValue("background", properties));
 
+		JsonValue score = properties.get("score");
+		
+		this.score = new Float(getValue("start", score));
+		this.decrease = new Float(getValue("decrease", score));
+		this.starOne = new Float(getValue("starOne", score));
+		this.starTwo = new Float(getValue("starTwo", score));
+		this.starThree = new Float(getValue("starThree", score));
+
 		// ======== Load Spawners =========== //
 
 		for (int i = 0; i < spawners.size; i++) {
@@ -100,8 +120,9 @@ public class Level {
 
 			float spawnRate = Float.parseFloat(getValue("spawnRate", spawner));
 			float chance = Float.parseFloat(getValue("chance", spawner));
+			float spawnRateIncrease = Float.parseFloat(getValue("spawnIncrease", spawner));
 
-			Spawner s = new Spawner(spawnRate, chance);
+			Spawner s = new Spawner(spawnRate, chance, spawnRateIncrease);
 
 			JsonValue bounds = spawner.get("bounds");
 
@@ -234,6 +255,9 @@ public class Level {
 	}
 
 	public void update(float delta) {
+		
+		score -= decrease * delta;
+		
 		entityHandler.update(delta);
 	}
 
@@ -247,18 +271,7 @@ public class Level {
 		}
 		entityHandler.render(sb);
 
-		// ShapeRenderer sr = ScreenManager.getSelected().sr;
-		//
-		// sr.begin(ShapeType.Line);
-		// {
-		// sr.setColor(Color.RED);
-		// for (Entity e : entityHandler.entities) {
-		// sr.rect(e.position.x - (e.size.x * e.hitboxScale) / 2, e.position.y -
-		// (e.size.y * e.hitboxScale) / 2, e.size.x * e.hitboxScale, e.size.y *
-		// e.hitboxScale);
-		// }
-		// }
-		// sr.end();
+
 
 	}
 

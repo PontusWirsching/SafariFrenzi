@@ -141,6 +141,13 @@ public class Entity implements Renderable {
 		entityID = id;
 		return this;
 	}
+	
+	/**
+	 * This method gets called once the entity has died.
+	 */
+	public void died() {
+		
+	}
 
 	/**
 	 * Returns the distance to a specific entity from this entity.
@@ -164,6 +171,7 @@ public class Entity implements Renderable {
 		}
 
 		if (health <= 0) {
+			died();
 			LevelHandler.getSelected().entityHandler.remove(this);
 		}
 
