@@ -19,6 +19,8 @@ public class GUIElement {
 	 * Elements total width and height, not from center but from edge to edge.
 	 */
 	public float width, height;
+	
+	public float originalWidth, originalHeight;
 
 	/**
 	 * The texture to be displayed for the element. This can be changed runtime
@@ -32,6 +34,8 @@ public class GUIElement {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		originalWidth = width;
+		originalHeight = height;
 	}
 
 	/**

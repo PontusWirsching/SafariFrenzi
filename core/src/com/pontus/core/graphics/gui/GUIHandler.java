@@ -2,6 +2,7 @@ package com.pontus.core.graphics.gui;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.pontus.core.Input;
@@ -45,9 +46,15 @@ public class GUIHandler {
 				Button b = (Button) e;
 				Rectangle r = new Rectangle(e.x - e.width / 2, e.y - e.height / 2, e.width, e.height);
 				if (r.contains(Input.getX(), Input.getY())) {
-					b.buttonInterface.onHover();
+					b.buttonInterface.onHover(b);
+					if (Gdx.input.isTouched() && b.toggle) {
+						b.toggle = false;
+						b.buttonInterface.onClicked(b);
+					} else if (!Gdx.input.isTouched() && !b.toggle) {
+						b.toggle = true;
+					}
 				} else {
-					b.buttonInterface.notHover();
+					b.buttonInterface.notHover(b);
 				}
 			}
 

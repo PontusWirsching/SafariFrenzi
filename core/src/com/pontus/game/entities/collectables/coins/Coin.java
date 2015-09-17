@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Money;
 import com.pontus.core.Util;
 import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.GUIHandler;
@@ -121,6 +122,7 @@ public class Coin extends Collectible {
 
 			if (Util.getDistance(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y) < 20) {
 				LevelHandler.getSelected().score += Values.COIN_BRONZE;
+				Money.add(Values.COIN_BRONZE);
 				remove();
 			}
 

@@ -35,6 +35,11 @@ public class Game extends GameScreen {
 	public static float topBarPosition;
 
 	/**
+	 * The drop rate will be multiplied by this value.
+	 */
+	public static float dropRateMultiplier = 1.0f;
+
+	/**
 	 * Add all GUI elements here!
 	 */
 	public Game(String name) {
@@ -49,53 +54,72 @@ public class Game extends GameScreen {
 		topBarPosition = camera.viewportHeight / 2 - Resources.get("gui:element:top_bar").getRegionHeight() / 1.6f;
 
 		LevelHandler.add(new Level("levels/test.json"));
-		
 
-		
-		
 		GUIHandler.add(new Topbar("top_bar", 0, topBarPosition, 50, Resources.get("gui:element:top_bar").getRegionHeight() / 1.2f).setTexture(Resources.get("gui:element:top_bar")));
 
 		GUIHandler.add(new Button("chest", camera.viewportWidth / 1.8f, topBarPosition, 100, 100, new ButtonInterface() {
 
 			@Override
-			public void onHover() {
-				GUIHandler.get("chest").texture = Resources.get("gui:chest:open");
+			public void onHover(Button b) {
+				b.texture = Resources.get("gui:chest:open");
 			}
 
 			@Override
-			public void notHover() {
+			public void notHover(Button b) {
 
 			}
 
 			@Override
-			public void onClicked() {
+			public void onClicked(Button b) {
 
 			}
 
 		}).setTexture(Resources.get("gui:chest:closed")).setCustomRenderer(new CustomRenderer() {
 
 			TextureRegion priceBox = Resources.get("gui:element:price_box");
-			
+
 			@Override
 			public void customDraw(SpriteBatch sb, Sprite sprite) {
 				sb.draw(priceBox, sprite.x - 75 / 2, sprite.y - sprite.height / 1.8f, 75, 30);
 				font.setScale(1.2f);
 				font.setColor(Color.BLACK);
-				String s = String.valueOf(0);
-
+				String s = String.valueOf(Money.chest);
 				font.draw(sb, s, sprite.x - font.getBounds(s).width / 2, sprite.y - sprite.height / 3f);
 			}
-			
+
 		}));
 
 		GUIHandler.add(new StarBar("starbar", 0, topBarPosition - 4, 521 / 2, 71 / 2).setTexture(Resources.get("gui:starbar:empty")));
 
-		GUIHandler.add(new Icon("fence", 100, topBarPosition - 4, 30, 30).setTexture(Resources.get("gui:icon:fence_purchase")));
+		GUIHandler.add(new Icon("fence", 100, topBarPosition - 4, 30, 30).setValue(100).setTexture(Resources.get("gui:icon:fence_purchase")));
 		GUIHandler.add(new Icon("fruit_quality", 100, topBarPosition - 4, 35, 35).setTexture(Resources.get("gui:icon:fruit_quality")));
 		GUIHandler.add(new Icon("fruit_droprate", 100, topBarPosition - 4, 35, 35).setTexture(Resources.get("gui:icon:fruit_droprate")));
 		GUIHandler.add(new Icon("hyde_thickness", 100, topBarPosition - 4, 35, 35).setTexture(Resources.get("gui:icon:hyde_thickness")));
 		GUIHandler.add(new Icon("stamina", 100, topBarPosition - 4, 35, 35).setTexture(Resources.get("gui:icon:stamina_increase")));
-		GUIHandler.add(new Icon("money_droprate", 100, topBarPosition - 4, 35, 35).setTexture(Resources.get("gui:icon:money_droprate")));
+		GUIHandler.add(new Button("money_droprate", 100, topBarPosition - 4, 35, 35, new ButtonInterface() {
+
+			@Override
+			public void onHover(Button b) {
+				b.width = b.originalWidth * 1.2f;
+				b.height = b.originalHeight * 1.2f;
+			}
+
+			@Override
+			public void onClicked(Button b) {
+				if (b.getValue() <= Money.chest) {
+					Money.chest -= b.getValue();
+					b.increaseValue(b.getValue());
+					dropRateMultiplier *= 1.2f;
+				}
+			}
+
+			@Override
+			public void notHover(Button b) {
+				b.width = b.originalWidth;
+				b.height = b.originalHeight;
+			}
+
+		}).setTexture(Resources.get("gui:icon:money_droprate")));
 
 	}
 
@@ -110,9 +134,7 @@ public class Game extends GameScreen {
 		GUIHandler.get("chest").x = camera.viewportWidth / 2f - GUIHandler.get("chest").width / 2;
 		GUIHandler.get("starbar").x = -camera.viewportWidth / 2 + GUIHandler.get("starbar").width / 2;
 		GUIHandler.get("fence").x = camera.viewportWidth / 2f - GUIHandler.get("fence").width * -0.1f - GUIHandler.get("starbar").width / 2;
-		
-		
-		
+
 		GUIElement[] buttons = new GUIElement[6];
 		buttons[0] = GUIHandler.get("fence");
 		buttons[1] = GUIHandler.get("fruit_quality");
@@ -120,15 +142,11 @@ public class Game extends GameScreen {
 		buttons[3] = GUIHandler.get("hyde_thickness");
 		buttons[4] = GUIHandler.get("stamina");
 		buttons[5] = GUIHandler.get("money_droprate");
-		
+
 		for (int i = 1; i < buttons.length; i++) {
 			GUIElement button = buttons[i];
 			button.x = -i * (35 + 25) + buttons[0].x;
 		}
-		
-		
-		
-		
 
 		GUIHandler.get("chest").texture = Resources.get("gui:chest:closed");
 		for (int i = 0; i < GUIHandler.elements.size(); i++) {
@@ -144,33 +162,32 @@ public class Game extends GameScreen {
 
 		LevelHandler.update(delta);
 		SpawnerManager.update();
-		
+
 		if (Input.lastTouchWas(250)) {
 			Gdx.input.vibrate(100);
 			GUIHandler.add(new Fruit("dropped_fruit", Input.x, Input.y, Input.y - 100));
 		}
-		
-		
-//		boolean touchedAnEntity = false;
-		if (Gdx.input.isTouched() && !limitTouch) {
 
+		// boolean touchedAnEntity = false;
+		if (Gdx.input.isTouched() && !limitTouch) {
 
 			// Check if any entity is touched if so, call entity.touched();
 			for (Entity e : LevelHandler.getSelected().entityHandler.entities) {
 				if (new Rectangle(e.position.x - (e.size.x * e.hitboxScale) / 2, e.position.y - (e.size.y * e.hitboxScale) / 2, e.size.x * e.hitboxScale, e.size.y * e.hitboxScale).contains(Input.x, Input.y)) {
-//					touchedAnEntity = true;
+					// touchedAnEntity = true;
 					e.touched();
 				}
 			}
 
-//			// If no entity is touched, drop a fruit.
-//			if (!touchedAnEntity) {
-//
-//				// GUIHandler.add(new Fruit("dropped_fruit", Input.x,
-//				// Game.height / 2 + 100, Input.y));
-//				GUIHandler.add(new Fruit("dropped_fruit", Input.x, Input.y, Input.y - 100));
-//
-//			}
+			// // If no entity is touched, drop a fruit.
+			// if (!touchedAnEntity) {
+			//
+			// // GUIHandler.add(new Fruit("dropped_fruit", Input.x,
+			// // Game.height / 2 + 100, Input.y));
+			// GUIHandler.add(new Fruit("dropped_fruit", Input.x, Input.y,
+			// Input.y - 100));
+			//
+			// }
 
 			limitTouch = true;
 		} else if (!Gdx.input.isTouched() && limitTouch) {
@@ -184,12 +201,10 @@ public class Game extends GameScreen {
 			Input.update();
 
 			GUIHandler.render(sb);
-			
-			
+
 		}
 		sb.end();
-		
-		
+
 		if (DEBUG_ENTITY) {
 			sr.begin(ShapeType.Line);
 			{

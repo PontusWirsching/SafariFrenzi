@@ -13,8 +13,9 @@
 	<Sprite name="gui:starbar:first" x="0" y="399" width="521" height="71"></Sprite>
 	<Sprite name="gui:starbar:second" x="0" y="470" width="521" height="71"></Sprite>
 	<Sprite name="gui:starbar:third" x="0" y="541" width="521" height="71"></Sprite>
-	<Sprite name="gui:star:empty" x="664" y="486" width="174" height="175"></Sprite>
-	<Sprite name="gui:star:filled" x="838" y="486" width="174" height="175"></Sprite>
+	<Sprite name="gui:starbar:fill" x="521" y="328" width="142" height="23"></Sprite>
+	<Sprite name="gui:star:empty" x="664" y="186" width="174" height="175"></Sprite>
+	<Sprite name="gui:star:filled" x="838" y="186" width="174" height="175"></Sprite>
 
 	<!-- Icons -->
 	<Sprite name="gui:icon:fruit_droprate" x="1012" y="0" width="350" height="334"></Sprite>
@@ -33,10 +34,10 @@
 	<Sprite name="gem:purple_shadow" x="251" y="612" width="251" height="201"></Sprite>
 	<Sprite name="gem:blue_shadow" x="0" y="813" width="251" height="201"></Sprite>
 	<Sprite name="gem:pink_shadow" x="251" y="813" width="251" height="201"></Sprite>
-	
+
 	<Sprite name="gem:cyan" x="502" y="670" width="201" height="200"></Sprite>
 	<Sprite name="gem:purple" x="703" y="670" width="201" height="200"></Sprite>
 	<Sprite name="gem:blue" x="502" y="870" width="201" height="200"></Sprite>
 	<Sprite name="gem:pink" x="703" y="870" width="201" height="200"></Sprite>
-		
+
 </SpriteSheet>

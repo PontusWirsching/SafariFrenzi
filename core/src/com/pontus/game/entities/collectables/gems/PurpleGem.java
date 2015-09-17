@@ -2,6 +2,7 @@ package com.pontus.game.entities.collectables.gems;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.pontus.core.Money;
 import com.pontus.core.Util;
 import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.GUIHandler;
@@ -59,6 +60,7 @@ public class PurpleGem extends Collectible {
 
 			if (Util.getDistance(x, y, GUIHandler.get("chest").x, GUIHandler.get("chest").y) < 20) {
 				LevelHandler.getSelected().score += Values.GEM_PURPLE;
+				Money.add(Values.GEM_PURPLE);
 				remove();
 			}
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Game;
 import com.pontus.core.Values;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
@@ -61,6 +62,8 @@ public class Elephant extends Mob {
 	 * How many coins should the elephant drop every second.
 	 */
 	public float dropRate = 1.0f;
+	
+
 	
 	/**
 	 * Private drop rate timer.
@@ -147,7 +150,7 @@ public class Elephant extends Mob {
 		}
 
 		time += Gdx.graphics.getDeltaTime();
-		if (time >= dropRate) {
+		if (time >= 1 / (dropRate * Game.dropRateMultiplier)) {
 
 			for (int i = 0; i < 1; i++) {
 				LevelHandler.getSelected().spawnCoin(position);

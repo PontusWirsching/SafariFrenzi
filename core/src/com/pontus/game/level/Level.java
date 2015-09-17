@@ -108,6 +108,9 @@ public class Level {
 		this.starOne = new Float(getValue("starOne", score));
 		this.starTwo = new Float(getValue("starTwo", score));
 		this.starThree = new Float(getValue("starThree", score));
+		
+		System.out.println(starOne + ", " + starTwo + ", " + starThree);
+		
 
 		// ======== Load Spawners =========== //
 

@@ -3,8 +3,8 @@
 		name: "Test Level",
 		background: "background:gameplay_sat",
 		score: {
-			start: "3500",
-			decrease: "10",
+			start: "3000",
+			decrease: "100",
 			starOne: "1000",
 			starTwo: "2000",
 			starThree: "3000"
@@ -19,7 +19,7 @@
 			width: "125",
 			height: "83",
 			health: "5",
-			dropRate: "5.0"
+			dropRate: "0.2"
 		},
 		entity: {
 			id: "spawnedElephant",
@@ -29,7 +29,7 @@
 			width: "125",
 			height: "83",
 			health: "5",
-			dropRate: "5.0"
+			dropRate: "0.2"
 		},
 		entity: {
 			id: "spawnedElephant",
@@ -39,7 +39,7 @@
 			width: "125",
 			height: "83",
 			health: "5",
-			dropRate: "5.0"
+			dropRate: "0.2"
 		}
 		
 	},
@@ -88,7 +88,7 @@
 				height: "83",
 				health: "5",
 				id: "spawnedElephant",
-				dropRate: "5.0"
+				dropRate: "0.2"
 			},
 			spawnrate: "0.025",
 			chance: "1.0",
