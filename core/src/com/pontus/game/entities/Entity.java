@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.pontus.core.Game;
 import com.pontus.core.Util;
 import com.pontus.core.graphics.Renderable;
 import com.pontus.core.scripts.Script;
+import com.pontus.game.entities.mobs.Elephant;
 import com.pontus.game.entities.mobs.Mob;
 import com.pontus.game.level.LevelHandler;
 
@@ -19,6 +21,11 @@ import com.pontus.game.level.LevelHandler;
  */
 public class Entity implements Renderable {
 
+	/**
+	 * How much damage an entity can do to another.
+	 */
+	public float attackDamage = 1;
+	
 	/**
 	 * Is the entity hostile?
 	 */
@@ -68,7 +75,7 @@ public class Entity implements Renderable {
 	 * 
 	 */
 	public EntityTypes type = EntityTypes.TARGET;
-	
+
 	/**
 	 * How many attacks per second.
 	 */
@@ -113,7 +120,7 @@ public class Entity implements Renderable {
 	 * The Mob can't move above this y position.
 	 */
 	public int topBounds = 100;
-	
+
 	public Entity(float x, float y, float w, float h) {
 		position = new Vector2(x, y);
 		size = new Vector2(w, h);
@@ -141,12 +148,12 @@ public class Entity implements Renderable {
 		entityID = id;
 		return this;
 	}
-	
+
 	/**
-	 * This method gets called once the entity has died.
+	 * This method gets called once the entity just died.
 	 */
 	public void died() {
-		
+
 	}
 
 	/**
@@ -181,7 +188,7 @@ public class Entity implements Renderable {
 		if (velocity.x > 0) {
 			flip = flipOffset;
 		}
-		
+
 		if (this instanceof Mob) {
 			if (position.y >= topBounds) {
 				position.y = topBounds;
@@ -197,7 +204,8 @@ public class Entity implements Renderable {
 	 */
 	public void attack() {
 		if (canAttack) {
-			if (target != null) target.health--;
+			if (target instanceof Elephant) if (target != null) target.health -= 1 * -Game.elephantHyde; 
+			if (target != null) target.health -= attackDamage;
 			canAttack = false;
 		}
 	}
@@ -232,9 +240,7 @@ public class Entity implements Renderable {
 			sb.draw(frame, position.x - size.x / 2, position.y - size.y / 2, size.x, size.y);
 		}
 
-		if (health < prevHealth) {
-			a = 1;
-		}
+		if (health < prevHealth) a = 1;
 		a -= 0.15f;
 		if (a <= 0) a = 0;
 		sb.setColor(1, 0, 0, a);
@@ -244,7 +250,7 @@ public class Entity implements Renderable {
 		} else {
 			sb.draw(frame, position.x - size.x / 2, position.y - size.y / 2, size.x, size.y);
 		}
-		
+
 		sb.setColor(Color.WHITE);
 
 		prevHealth = health;

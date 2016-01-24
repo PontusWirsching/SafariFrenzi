@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Game;
 import com.pontus.game.entities.Entity;
 import com.pontus.game.level.LevelHandler;
 
@@ -51,7 +52,7 @@ public class Collectible extends Entity {
 	public void draw(SpriteBatch sb) {
 
 		// Decay timer
-		time += Gdx.graphics.getDeltaTime();
+		if (!Game.pause) time += Gdx.graphics.getDeltaTime();
 		if (time >= decayTime) {
 			LevelHandler.getSelected().entityHandler.remove(this);
 		}
@@ -77,7 +78,7 @@ public class Collectible extends Entity {
 
 		// If the collectible is decaying then make it flicker.
 		if (decaying) {
-			flickerTimer += Gdx.graphics.getDeltaTime();
+			if (!Game.pause) flickerTimer += Gdx.graphics.getDeltaTime();
 			if (flickerTimer >= 1 / flickerRate) {
 				flickerTimer = 0.0f;
 				show = !show;
@@ -88,7 +89,7 @@ public class Collectible extends Entity {
 		if (texture == null) {
 
 			// Increase state time.
-			stateTime += Gdx.graphics.getDeltaTime();
+			if (!Game.pause) stateTime += Gdx.graphics.getDeltaTime();
 
 			// Get current frame.
 			currentFrame = a.getKeyFrame(stateTime);
@@ -105,6 +106,7 @@ public class Collectible extends Entity {
 
 	@Override
 	public void touched() {
+		System.out.println("Coin Touched!");
 		health = 0; // Kill item.
 		spawnGhost(); // Spawns a flying gui sprite.
 		super.touched();

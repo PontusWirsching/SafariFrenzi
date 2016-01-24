@@ -2,6 +2,7 @@ package com.pontus.core.graphics.gui.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.pontus.core.Game;
 import com.pontus.core.graphics.gui.GUIElement;
 import com.pontus.core.graphics.gui.GUIHandler;
 import com.pontus.core.resources.Resources;
@@ -36,7 +37,7 @@ public class Fruit extends GUIElement {
 		if (y <= target) {
 			y = target;
 			LevelHandler.getSelected().entityHandler.add(new FruitEntity(x, y, width, height));
-			GUIHandler.remove(this);
+			Game.gui.remove(this);
 		}
 	}
 

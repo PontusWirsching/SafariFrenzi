@@ -1,5 +1,50 @@
 <SpriteSheet>
 
+	<!-- Bronze Coins -->
+	<Sprite name="coin:bronze:1" x="0" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:2" x="261" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:3" x="522" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:4" x="783" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:5" x="1044" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:6" x="1305" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:7" x="1566" y="0" width="261" height="254" />
+	<Sprite name="coin:bronze:8" x="1827" y="0" width="261" height="254" />
+
+	<!-- Bronze Coins With Shadow -->
+	<Sprite name="coin:bronze:1_shadow" x="0" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:2_shadow" x="413" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:3_shadow" x="826" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:4_shadow" x="1239" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:5_shadow" x="1652" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:6_shadow" x="2065" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:7_shadow" x="2478" y="254" width="413" height="305"></Sprite>
+	<Sprite name="coin:bronze:8_shadow" x="2891" y="254" width="413" height="305"></Sprite>
+	
+	
+	
+	
+	<!-- Silver Coins -->
+	<Sprite name="coin:silver:1" x="0" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:2" x="261" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:3" x="522" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:4" x="783" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:5" x="1044" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:6" x="1305" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:7" x="1566" y="559" width="261" height="254" />
+	<Sprite name="coin:silver:8" x="1827" y="559" width="261" height="254" />
+
+	<!-- silver Silver With Shadow -->
+	<Sprite name="coin:silver:1_shadow" x="0" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:2_shadow" x="413" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:3_shadow" x="826" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:4_shadow" x="1239" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:5_shadow" x="1652" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:6_shadow" x="2065" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:7_shadow" x="2478" y="813" width="413" height="305"></Sprite>
+	<Sprite name="coin:silver:8_shadow" x="2891" y="813" width="413" height="305"></Sprite>
+	
+	
+	
 	<!-- Gold Coins -->
 	<Sprite name="coin:gold:1" x="0" y="1118" width="261" height="254" />
 	<Sprite name="coin:gold:2" x="261" y="1118" width="261" height="254" />

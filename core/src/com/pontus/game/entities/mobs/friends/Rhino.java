@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Game;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
+import com.pontus.game.level.LevelHandler;
 
 public class Rhino extends Friend {
 
@@ -37,7 +39,10 @@ public class Rhino extends Friend {
 	
 	@Override
 	public void draw(SpriteBatch sb) {
-		stateTime += Gdx.graphics.getDeltaTime();
+		
+		attackDamage = 1 + (int)(LevelHandler.getSelected().friendsUpgradeLevel / 2.0);
+		
+		if (!Game.pause) stateTime += Gdx.graphics.getDeltaTime();
 		currentFrame = a.getKeyFrame(stateTime);
 		drawFrame(sb, currentFrame);
 	}

@@ -51,7 +51,7 @@ public class GameScreen implements Screen {
 		float h = Gdx.graphics.getHeight(); // Real screen height.
 		
 		//Initialize camera.
-		camera = new OrthographicCamera(GameScreen.height * (w / h), GameScreen.height);
+		camera = new OrthographicCamera((GameScreen.height * (w / h) + 1) / 2 * 2, (GameScreen.height + 1) / 2 * 2);
 		
 	}
 

@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.pontus.core.Game;
 import com.pontus.core.graphics.screen.ScreenManager;
 import com.pontus.core.resources.Resources;
 import com.pontus.game.ai.Behaviors;
-import com.pontus.game.entities.collectables.gems.PurpleGem;
+import com.pontus.game.entities.collectables.gems.GemPurple;
 import com.pontus.game.level.LevelHandler;
 
 public class RangerRon extends Friend {
@@ -44,7 +45,7 @@ public class RangerRon extends Friend {
 	
 
 	float timer = 0;
-	float dropRate = 0.2f;
+	public float dropRate = 0.2f;
 	
 	@Override
 	public void update(float delta) {
@@ -52,10 +53,12 @@ public class RangerRon extends Friend {
 		float width = ScreenManager.getSelected().camera.viewportWidth;
 		ai.roamBounds = new Rectangle(-(width * 0.8f) / 2, 100, (width * 0.6f), 50);
 		
-		timer += Gdx.graphics.getDeltaTime();
+		dropRate = 0.2f + (LevelHandler.getSelected().friendsUpgradeLevel / 10f);
+		
+		if (!Game.pause) timer += Gdx.graphics.getDeltaTime();
 		if (timer >= 1 / dropRate) {
 			timer = 0;
-			LevelHandler.getSelected().entityHandler.add(new PurpleGem(position.x, position.y - size.y / 2, 50, 50).setHealth(1));
+			LevelHandler.getSelected().entityHandler.add(new GemPurple(position.x, position.y - size.y / 2, 50, 50).setHealth(1));
 		}
 		
 		
@@ -63,7 +66,7 @@ public class RangerRon extends Friend {
 	
 	@Override
 	public void draw(SpriteBatch sb) {
-		stateTime += Gdx.graphics.getDeltaTime();
+		if (!Game.pause) stateTime += Gdx.graphics.getDeltaTime();
 		currentFrame = a.getKeyFrame(stateTime);
 		drawFrame(sb, currentFrame);
 	}

@@ -5,5 +5,5 @@
 	<Sprite name="monkey:walk_02" x="593" y="0" width="593" height="839"></Sprite>
 	<Sprite name="monkey:walk_03" x="1186" y="0" width="593" height="839"></Sprite>
 	<Sprite name="monkey:walk_04" x="1779" y="0" width="593" height="839"></Sprite>
-
+	
 </SpriteSheet>

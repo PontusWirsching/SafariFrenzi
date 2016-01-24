@@ -12,7 +12,11 @@ public class DesktopLauncher {
 		config.width = 1920 / 2;
 		config.height = 1080 / 2;
 		config.vSyncEnabled = true;
+		SafariFrenzi.DESKTOP = true; // Lets the game know that we're running on a dekstop.
 //		config.fullscreen = true;
 		new LwjglApplication(new SafariFrenzi(), config);
+	
+	
+	
 	}
 }

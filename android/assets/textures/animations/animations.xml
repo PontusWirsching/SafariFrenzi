@@ -1,0 +1,6 @@
+<Animations location="textures/animations">
+    
+    <!-- Monkey animations -->
+    <Animation name="monkey:walk" path="monkey/walk" fps="30.0" frameWidth="163" frameHeight="173"></Animation>
+    
+</Animations>

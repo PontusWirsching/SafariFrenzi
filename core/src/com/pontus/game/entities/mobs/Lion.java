@@ -1,55 +1,43 @@
 package com.pontus.game.entities.mobs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.utils.Array;
-import com.pontus.core.resources.Resources;
+import com.pontus.core.Game;
+import com.pontus.core.graphics.CustomAnimation;
 import com.pontus.game.ai.Behaviors;
 import com.pontus.game.entities.EntityTypes;
 
 public class Lion extends Mob {
 
-	Animation a;
-	float stateTime = (float) Math.random();
-	TextureRegion currentFrame;
+	public CustomAnimation animation;
 
 	public Lion(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		ai.setBehavior(Behaviors.HUNT_NEAREST);
-		
+
 		type = EntityTypes.HOSTILE;
-		
+
 		hitboxScale = 1.3f;
 
 		hostile = true;
 
-		speed = 2.5f;
+		speed = (2.5f * 1.2f) * (2.0f / 3.0f);
 
-		Array<TextureRegion> frames = new Array<TextureRegion>();
-
-		frames.add(new TextureRegion(Resources.get("lion:walk_01")));
-		frames.add(new TextureRegion(Resources.get("lion:walk_02")));
-		frames.add(new TextureRegion(Resources.get("lion:walk_03")));
-		frames.add(new TextureRegion(Resources.get("lion:walk_04")));
-
-		a = new Animation(0.10f, frames);
-		a.setPlayMode(PlayMode.LOOP);
+		animation = new CustomAnimation("lion:walk", "textures/animations/lion/walk.png", 60, 219, 154);
 
 	}
 
 	@Override
 	public void touched() {
-		health--;
+		health -= Game.tapDamage;
+		Gdx.input.vibrate(100);
 	}
-	
+
 	@Override
 	public void draw(SpriteBatch sb) {
-		stateTime += Gdx.graphics.getDeltaTime();
-		currentFrame = a.getKeyFrame(stateTime);
-		drawFrame(sb, currentFrame);
+		if (!Game.pause)
+			animation.update();
+		drawFrame(sb, animation.getCurrentFrame());
 	}
 
 }

@@ -13,13 +13,13 @@ public class GUIElement {
 	/**
 	 * Elements center position.
 	 */
-	public float x, y;
+	public float x, y, z; // Z is the element "depth".
 
 	/**
 	 * Elements total width and height, not from center but from edge to edge.
 	 */
 	public float width, height;
-	
+
 	public float originalWidth, originalHeight;
 
 	/**
@@ -38,6 +38,11 @@ public class GUIElement {
 		originalHeight = height;
 	}
 
+	public Object setDepth(int z) {
+		this.z = z;
+		return this;
+	}
+
 	/**
 	 * Sets the texture and returns this object.
 	 */
@@ -47,8 +52,7 @@ public class GUIElement {
 	}
 
 	public void draw(SpriteBatch sb) {
-		if (texture != null)
-			sb.draw(texture, x - width / 2, y - height / 2, width, height);
+		if (texture != null) sb.draw(texture, x - width / 2, y - height / 2, width, height);
 	}
 
 }

@@ -18,16 +18,22 @@
 	<Sprite name="gui:star:filled" x="838" y="186" width="174" height="175"></Sprite>
 
 	<!-- Icons -->
+	<Sprite name="gui:icon:increase_tap" x="0" y="1014" width="347" height="338"></Sprite>
 	<Sprite name="gui:icon:fruit_droprate" x="1012" y="0" width="350" height="334"></Sprite>
 	<Sprite name="gui:icon:hyde_thickness" x="709" y="361" width="303" height="309"></Sprite>
 	<Sprite name="gui:icon:fruit_quality" x="1012" y="534" width="201" height="200"></Sprite>
 	<Sprite name="gui:icon:fence_purchase" x="1012" y="334" width="201" height="200"></Sprite>
 	<Sprite name="gui:icon:stamina_increase" x="1362" y="0" width="481" height="300"></Sprite>
 	<Sprite name="gui:icon:money_droprate" x="1213" y="334" width="238" height="219"></Sprite>
+	<Sprite name="gui:icon:elephantPurchase" x="1315" y="811" width="389" height="378"></Sprite>
+	<Sprite name="gui:icon:friendsUpgrade" x="1704" y="811" width="389" height="378"></Sprite>
 
 	<!-- Elements -->
 	<Sprite name="gui:element:top_bar" x="904" y="734" width="1202" height="77"></Sprite>
 	<Sprite name="gui:element:price_box" x="852" y="105" width="160" height="81"></Sprite>
+
+	<Sprite name="gui:element:pause" x="904" y="811" width="411" height="411"></Sprite>
+	<Sprite name="gui:element:play" x="1451" y="300" width="411" height="411"></Sprite>
 
 	<!-- Gems -->
 	<Sprite name="gem:cyan_shadow" x="0" y="612" width="251" height="201"></Sprite>
@@ -39,5 +45,13 @@
 	<Sprite name="gem:purple" x="703" y="670" width="201" height="200"></Sprite>
 	<Sprite name="gem:blue" x="502" y="870" width="201" height="200"></Sprite>
 	<Sprite name="gem:pink" x="703" y="870" width="201" height="200"></Sprite>
+
+	<!-- Buttons -->
+	<Sprite name="gui:button:back:notpressed" x="1315" y="1189" width="500" height="310"></Sprite>
+	<Sprite name="gui:button:back:pressed" x="1815" y="1189" width="500" height="310"></Sprite>
+	<Sprite name="gui:button:play:notpressed" x="521" y="489" width="142" height="138"></Sprite>
+	<Sprite name="gui:button:play:pressed" x="521" y="351" width="142" height="138"></Sprite>
+	<Sprite name="gui:button:heart" x="1843" y="0" width="270" height="240"></Sprite>
+	<Sprite name="gui:button:green_circle" x="1862" y="300" width="363" height="363"></Sprite>
 
 </SpriteSheet>

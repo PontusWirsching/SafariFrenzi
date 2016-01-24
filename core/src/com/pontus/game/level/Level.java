@@ -1,6 +1,7 @@
 package com.pontus.game.level;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,11 @@ import com.pontus.game.entities.Entity;
 import com.pontus.game.entities.EntityManager;
 import com.pontus.game.entities.Spawner;
 import com.pontus.game.entities.SpawnerManager;
-import com.pontus.game.entities.collectables.coins.Coin;
+import com.pontus.game.entities.collectables.coins.CoinBronze;
+import com.pontus.game.entities.collectables.coins.CoinGold;
+import com.pontus.game.entities.collectables.coins.CoinSilver;
+import com.pontus.game.entities.collectables.gems.GemBlue;
+import com.pontus.game.entities.collectables.gems.GemLightBlue;
 import com.pontus.game.entities.mobs.Elephant;
 import com.pontus.game.entities.mobs.friends.FriendManager;
 import com.pontus.game.entities.mobs.friends.FriendType;
@@ -26,15 +31,31 @@ public class Level {
 
 	public String path = "";
 	public String name = "NOT_SET";
-	
+
 	/**
 	 * The score of this level.
 	 */
 	public float score = 0;
-	
+
 	public float decrease = 0;
-	
+
 	public float starOne = 0, starTwo = 0, starThree = 0;
+
+	/**
+	 * At what level the friends upgrade is, this is used to calculate their power and also the price.
+	 */
+	public int friendsUpgradeLevel = 0;
+	
+	/**
+	 * Fence value, 0 = no fence, 1 = first side built and so on..
+	 */
+	public int fence = 0;
+
+	public int[] fencePrice = new int[4];
+
+	public int getFencePrice() {
+		return fencePrice[fence];
+	}
 
 	public TextureRegion background;
 
@@ -44,11 +65,38 @@ public class Level {
 		this.path = path;
 		entityHandler = new EntityManager();
 
+		
+
+		load();
+
+	}
+	
+	Random r = new Random();
+	
+	public void spawnElephant() {
+		Vector2 minPos = new Vector2(-100, -100);
+		Vector2 maxPos = new Vector2(200, 200);
+		try {
+			float x = r.nextFloat() * (maxPos.x - minPos.x) + minPos.x;
+			float y = r.nextFloat() * (maxPos.y - minPos.y) + minPos.y;
+
+			Elephant e = new Elephant(x, y, 125, 83);
+			e.setHealth(5);
+			e.dropRate = 0.2f;
+			e.setID("spawnedElephant");
+			LevelHandler.getSelected().entityHandler.add(e);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void isPlaying() {
 		for (FriendType t : FriendManager.getData()) {
 			if (t == null) continue;
 			switch (t) {
 				case MONKEY:
-					entityHandler.add(new Monkey(0, 0, 539 / 10, 839 / 10));
+					entityHandler.add(new Monkey(0, 0, 163 / 2.5f, 173 / 2.5f));
 					break;
 				case RANGER_RON:
 					entityHandler.add(new RangerRon(0, 0, 967 / 16, 1564 / 16));
@@ -60,15 +108,8 @@ public class Level {
 					break;
 			}
 		}
-
-		load();
-
 	}
 
-	public void isPlaying() {
-		
-	}
-	
 	private void load() {
 
 		JsonReader r = new JsonReader();
@@ -102,15 +143,21 @@ public class Level {
 		background = Resources.get(getValue("background", properties));
 
 		JsonValue score = properties.get("score");
-		
+
 		this.score = new Float(getValue("start", score));
 		this.decrease = new Float(getValue("decrease", score));
 		this.starOne = new Float(getValue("starOne", score));
 		this.starTwo = new Float(getValue("starTwo", score));
 		this.starThree = new Float(getValue("starThree", score));
-		
+
+		JsonValue fp = properties.get("fencePrice");
+
+		fencePrice[0] = Integer.parseInt(getValue("first", fp));
+		fencePrice[1] = Integer.parseInt(getValue("second", fp));
+		fencePrice[2] = Integer.parseInt(getValue("third", fp));
+		fencePrice[3] = Integer.parseInt(getValue("fourth", fp));
+
 		System.out.println(starOne + ", " + starTwo + ", " + starThree);
-		
 
 		// ======== Load Spawners =========== //
 
@@ -232,7 +279,7 @@ public class Level {
 	 * @param position
 	 *            - place for new coin to spawn from.
 	 */
-	public void spawnCoin(Vector2 position) {
+	public void spawnCoin(Vector2 position, int value) {
 
 		float r = 20 * (float) Math.random();
 		float w = 40 + r;
@@ -240,8 +287,22 @@ public class Level {
 
 		Vector2 velocity = new Vector2((float) (Math.random() - 0.5) * 2, 5 + (2 * (float) Math.random()));
 		velocity.set(0, 0);
-		entityHandler.add(new Coin(position.x, position.y - 50, w, h, velocity).setHealth(1));
 
+		if (value == 0) {
+			entityHandler.add(new CoinBronze(position.x, position.y - 50, w, h, velocity).setHealth(1));
+		}
+		if (value == 1) {
+			entityHandler.add(new CoinSilver(position.x, position.y - 50, w, h, velocity).setHealth(1));
+		}
+		if (value == 2) {
+			entityHandler.add(new CoinGold(position.x, position.y - 50, w, h, velocity).setHealth(1));
+		}
+		if (value == 3) {
+			entityHandler.add(new GemLightBlue(position.x, position.y - 50, w, h).setHealth(1));
+		}
+		if (value == 4) {
+			entityHandler.add(new GemBlue(position.x, position.y - 50, w, h).setHealth(1));
+		}
 	}
 
 	/**
@@ -258,9 +319,9 @@ public class Level {
 	}
 
 	public void update(float delta) {
-		
+
 		score -= decrease * delta;
-		
+
 		entityHandler.update(delta);
 	}
 
@@ -273,8 +334,6 @@ public class Level {
 			System.err.println("Background is null!");
 		}
 		entityHandler.render(sb);
-
-
 
 	}
 

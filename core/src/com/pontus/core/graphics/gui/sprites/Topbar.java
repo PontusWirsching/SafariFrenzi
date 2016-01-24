@@ -21,7 +21,7 @@ public class Topbar extends Sprite {
 		
 		Game.font.setScale(2);
 		Game.font.setColor(Color.WHITE);
-		Game.font.draw(sb, s, 0 + x - Game.font.getBounds(s).width / 2, 0 + y + Game.font.getBounds(s).height / 1.4f);
+		Game.font.draw(sb, s, 0 + x - Game.getTextWidth(s) / 2, 0 + y + Game.getTextHeight(s) / 1.4f);
 
 	}
 

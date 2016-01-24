@@ -3,11 +3,17 @@
 		name: "Test Level",
 		background: "background:gameplay_sat",
 		score: {
-			start: "3000",
-			decrease: "100",
+			start: "1500",
+			decrease: "30",
 			starOne: "1000",
 			starTwo: "2000",
-			starThree: "3000"
+			starThree: "4000"
+		},
+		fencePrice: {
+			first: 100,
+			second: 1000,
+			third: 3000,
+			fourth: 5000
 		}
 	},
 	entities: {
@@ -20,39 +26,18 @@
 			height: "83",
 			health: "5",
 			dropRate: "0.2"
-		},
-		entity: {
-			id: "spawnedElephant",
-			type: "mobs.Elephant",
-			x: "-200",
-			y: "0",
-			width: "125",
-			height: "83",
-			health: "5",
-			dropRate: "0.2"
-		},
-		entity: {
-			id: "spawnedElephant",
-			type: "mobs.Elephant",
-			x: "200",
-			y: "100",
-			width: "125",
-			height: "83",
-			health: "5",
-			dropRate: "0.2"
 		}
-		
 	},
 	spawners: {
 		spawner: {
 			entity: {
 				type: "mobs.Lion",
-				width: "112",
-				height: "60",
+				width: "130",
+				height: "77",
 				health: "3",
 				id: "lionFromLeft"
 			},
-			spawnrate: "2",
+			spawnrate: "1.5",
 			chance: "0.33",
 			spawnIncrease: "0.001",
 			bounds: {
@@ -66,12 +51,12 @@
 		spawner: {
 			entity: {
 				type: "mobs.Lion",
-				width: "112",
-				height: "60",
+				width: "130",
+				height: "77",
 				health: "3",
 				id: "lionFromRight"
 			},
-			spawnrate: "2",
+			spawnrate: "1.5",
 			chance: "0.33",
 			spawnIncrease: "0.001",
 			bounds: {
@@ -81,25 +66,6 @@
 				maxY: "300"
 			}	
 		},
-		spawner: {
-			entity: {
-				type: "mobs.Elephant",
-				width: "125",
-				height: "83",
-				health: "5",
-				id: "spawnedElephant",
-				dropRate: "0.2"
-			},
-			spawnrate: "0.025",
-			chance: "1.0",
-			spawnIncrease: "0",
-			bounds: {
-				minX: "-100",
-				minY: "-100",
-				maxX: "200",
-				maxY: "200"
-			}
-			
-		}
+		
 	}
 }
