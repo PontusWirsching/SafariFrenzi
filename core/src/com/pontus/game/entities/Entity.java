@@ -9,6 +9,7 @@ import com.pontus.core.Game;
 import com.pontus.core.Util;
 import com.pontus.core.graphics.Renderable;
 import com.pontus.core.scripts.Script;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.entities.mobs.Elephant;
 import com.pontus.game.entities.mobs.Mob;
 import com.pontus.game.level.LevelHandler;
@@ -204,7 +205,10 @@ public class Entity implements Renderable {
 	 */
 	public void attack() {
 		if (canAttack) {
-			if (target instanceof Elephant) if (target != null) target.health -= 1 * -Game.elephantHyde; 
+			if (target instanceof Elephant) if (target != null) {
+				target.health -= 1 * -Game.elephantHyde; 
+				SoundEffect.LION_ATTACK_ELEPHANT.play();
+			}
 			if (target != null) target.health -= attackDamage;
 			canAttack = false;
 		}

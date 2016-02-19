@@ -13,6 +13,7 @@ import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.graphics.screen.GameScreen;
 import com.pontus.core.graphics.screen.ScreenManager;
 import com.pontus.core.resources.Resources;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.entities.mobs.friends.FriendManager;
 import com.pontus.game.entities.mobs.friends.FriendType;
 import com.pontus.game.level.LevelHandler;
@@ -40,7 +41,6 @@ public class PrepareToPlay extends GameScreen {
 
 			@Override
 			public void onHover(Button b) {
-
 			}
 
 			@Override

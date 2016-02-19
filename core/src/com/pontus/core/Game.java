@@ -18,6 +18,7 @@ import com.pontus.core.graphics.gui.sprites.StarBar;
 import com.pontus.core.graphics.gui.sprites.Topbar;
 import com.pontus.core.graphics.screen.GameScreen;
 import com.pontus.core.resources.Resources;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.entities.Entity;
 import com.pontus.game.entities.SpawnerManager;
 import com.pontus.game.entities.mobs.Elephant;
@@ -82,7 +83,7 @@ public class Game extends GameScreen {
 		font = new BitmapFont();
 
 		gui = new GUIHandler();
-		//
+
 		// FriendManager.add(FriendType.RANGER_RON);
 		// FriendManager.add(FriendType.MONKEY);
 		// FriendManager.add(FriendType.RHINO);
@@ -102,6 +103,7 @@ public class Game extends GameScreen {
 			@Override
 			public void onClicked(Button b) {
 				pause = !pause;
+				SoundEffect.PAUSE_UNPAUSE_MENU.play();
 				Gdx.input.vibrate(vib);
 			}
 
@@ -550,6 +552,7 @@ public class Game extends GameScreen {
 		if (!pause)
 			if (Input.lastTouchWas(200)) {
 				Gdx.input.vibrate(100);
+				SoundEffect.DROP_FRUIT.play();
 				gui.add(new Fruit("dropped_fruit", Input.x, Input.y, Input.y - 100));
 			}
 

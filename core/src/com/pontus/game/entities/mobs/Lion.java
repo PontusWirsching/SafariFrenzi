@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pontus.core.Game;
 import com.pontus.core.graphics.CustomAnimation;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.ai.Behaviors;
 import com.pontus.game.entities.EntityTypes;
 
@@ -31,6 +32,7 @@ public class Lion extends Mob {
 	public void touched() {
 		health -= Game.tapDamage;
 		Gdx.input.vibrate(100);
+		SoundEffect.PLAYER_HIT_LION.play();
 	}
 
 	@Override

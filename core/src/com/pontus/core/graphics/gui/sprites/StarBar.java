@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.level.Level;
 import com.pontus.game.level.LevelHandler;
 
@@ -23,7 +24,7 @@ public class StarBar extends Sprite {
 	TextureRegion one = null;
 	TextureRegion two = null;
 	TextureRegion three = null;
-	
+
 	TextureRegion star_filled = null;
 	TextureRegion star_empty = null;
 
@@ -40,11 +41,20 @@ public class StarBar extends Sprite {
 		star_empty = Resources.get("gui:star:empty");
 	}
 
+	boolean t1 = false;
+	boolean t2 = false;
+	boolean t3 = false;
+	boolean t4 = false;
+	
+	int oldState = 0;
+
 	@Override
 	public void draw(SpriteBatch sb) {
 
 		Level currentLevel = LevelHandler.getSelected();
 
+		oldState = state;
+		
 		if (currentLevel.score > currentLevel.starThree) {
 			state = 3;
 		} else if (currentLevel.score > currentLevel.starTwo) {
@@ -55,6 +65,17 @@ public class StarBar extends Sprite {
 			state = 0;
 		}
 
+		// If state is more then a star is gained.
+		if (state > oldState) {
+			SoundEffect.GAIN_STAR.play();
+		} else if (state < oldState) {
+			SoundEffect.LOSE_STAR.play();
+		}
+		
+		
+
+		
+		
 		Rectangle a = new Rectangle(x - width / 2 * 0.27f * 3, y - height * 0.32f / 2, width * 0.27f, height * 0.32f);
 		Rectangle b = new Rectangle(x - width / 2 * 0.27f, y - height * 0.32f / 2, width * 0.27f, height * 0.32f);
 		Rectangle c = new Rectangle(x - width / 2 * 0.27f * -1, y - height * 0.32f / 2, width * 0.27f, height * 0.32f);
@@ -87,25 +108,27 @@ public class StarBar extends Sprite {
 		sb.draw(bar, a.x, a.y, 0, 0, a.width * th, a.height, 1, 1, 0);
 		sb.draw(bar, b.x, b.y, 0, 0, b.width * tw, b.height, 1, 1, 0);
 		sb.draw(bar, c.x, c.y, 0, 0, c.width * on, c.height, 1, 1, 0);
-		
+
 		float starSize = 30;
-		
+
 		float star1X = -35;
 		float star1Y = 20;
 		sb.draw(star_empty, x - starSize / 2 + star1X, y - starSize / 2 + star1Y, starSize, starSize);
-		if (currentLevel.score > currentLevel.starOne) sb.draw(star_filled, x - starSize / 2 + star1X, y - starSize / 2 + star1Y, starSize, starSize);
-		
+		if (currentLevel.score > currentLevel.starOne)
+			sb.draw(star_filled, x - starSize / 2 + star1X, y - starSize / 2 + star1Y, starSize, starSize);
+
 		float star2X = 35;
 		float star2Y = 20;
 		sb.draw(star_empty, x - starSize / 2 + star2X, y - starSize / 2 + star2Y, starSize, starSize);
-		if (currentLevel.score > currentLevel.starTwo) sb.draw(star_filled, x - starSize / 2 + star2X, y - starSize / 2 + star2Y, starSize, starSize);
-		
+		if (currentLevel.score > currentLevel.starTwo)
+			sb.draw(star_filled, x - starSize / 2 + star2X, y - starSize / 2 + star2Y, starSize, starSize);
+
 		float star3X = 105;
 		float star3Y = 20;
 		sb.draw(star_empty, x - starSize / 2 + star3X, y - starSize / 2 + star3Y, starSize, starSize);
-		if (currentLevel.score > currentLevel.starThree) sb.draw(star_filled, x - starSize / 2 + star3X, y - starSize / 2 + star3Y, starSize, starSize);
-		
-		
+		if (currentLevel.score > currentLevel.starThree)
+			sb.draw(star_filled, x - starSize / 2 + star3X, y - starSize / 2 + star3Y, starSize, starSize);
+
 	}
 
 }

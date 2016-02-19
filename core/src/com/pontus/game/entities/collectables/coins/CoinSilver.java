@@ -13,10 +13,11 @@ import com.pontus.core.Util;
 import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
-import com.pontus.game.entities.collectibles.Collectible;
+import com.pontus.core.sound.SoundEffect;
+import com.pontus.game.entities.collectables.Collectable;
 import com.pontus.game.level.LevelHandler;
 
-public class CoinSilver extends Collectible {
+public class CoinSilver extends Collectable {
 
 	public Vector2 origin;
 
@@ -123,6 +124,7 @@ public class CoinSilver extends Collectible {
 			if (Util.getDistance(x, y, Game.gui.get("chest").x, Game.gui.get("chest").y) < 20) {
 				LevelHandler.getSelected().score += Values.COIN_SILVER;
 				Money.add(Values.COIN_SILVER);
+				SoundEffect.COIN_IN_CHEST.play();
 				remove();
 			}
 

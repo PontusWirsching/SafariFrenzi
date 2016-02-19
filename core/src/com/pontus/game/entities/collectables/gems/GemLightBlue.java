@@ -8,10 +8,11 @@ import com.pontus.core.Util;
 import com.pontus.core.Values;
 import com.pontus.core.graphics.gui.Sprite;
 import com.pontus.core.resources.Resources;
-import com.pontus.game.entities.collectibles.Collectible;
+import com.pontus.core.sound.SoundEffect;
+import com.pontus.game.entities.collectables.Collectable;
 import com.pontus.game.level.LevelHandler;
 
-public class GemLightBlue extends Collectible {
+public class GemLightBlue extends Collectable {
 
 	public GemLightBlue(float x, float y, float w, float h) {
 		super(x, y, w, h);
@@ -61,6 +62,7 @@ public class GemLightBlue extends Collectible {
 			if (Util.getDistance(x, y, Game.gui.get("chest").x, Game.gui.get("chest").y) < 20) {
 				LevelHandler.getSelected().score += Values.GEM_LIGHTBLUE;
 				Money.add(Values.GEM_LIGHTBLUE);
+				SoundEffect.COIN_IN_CHEST.play();
 				remove();
 			}
 

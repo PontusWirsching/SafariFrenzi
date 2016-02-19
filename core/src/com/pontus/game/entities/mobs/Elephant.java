@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.pontus.core.Game;
 import com.pontus.core.Values;
 import com.pontus.core.resources.Resources;
+import com.pontus.core.sound.SoundEffect;
 import com.pontus.game.ai.Behaviors;
 import com.pontus.game.entities.Entity;
 import com.pontus.game.entities.collectables.fruit.FruitEntity;
@@ -108,6 +109,7 @@ public class Elephant extends Mob {
 	@Override
 	public void died() {
 		super.died();
+		SoundEffect.LOSE_ELEPHANT.play();
 		LevelHandler.getSelected().score -= Values.ELEPHANT_DEATH;
 	}
 
